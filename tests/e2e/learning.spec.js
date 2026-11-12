@@ -38,9 +38,18 @@ async function mockApi(page, authenticated = false) {
   })
   return { questions, calls }
 }
-async function visit(page, path) { await page.goto(path); await expect(page.locator('#nav-all-count')).toHaveText('41') }
-async function sidebar(page, isMobile) { if (isMobile) await page.locator('#btn-mobile-menu').click() }
+async function visit(page, path) { await page.goto(path, { waitUntil: 'domcontentloaded' }); await expect(page.locator('#nav-all-count')).toHaveText('41') }
+async function sidebar(page, isMobile) {
+  if (!isMobile) return
+  if (await page.locator('#app-header').evaluate(el => el.classList.contains('header-hidden'))) {
+    await page.locator('#main-scroll-container').hover()
+    await page.mouse.wheel(0, -100)
+  }
+  await page.locator('#btn-mobile-menu').click()
+}
 test.beforeEach(async ({ page }) => {
+  // Optional cross-site theme sync must not make fixture navigation depend on the network.
+  await page.route('https://mxiao.top/assets/theme-sync.js*', route => route.fulfill({ contentType: 'application/javascript', body: '' }))
   const errors = []
   page.on('pageerror', e => errors.push(e.message))
   page.on('console', message => { if (message.type() === 'error' && !/Failed to load resource|fonts.googleapis/.test(message.text())) errors.push(message.text()) })
@@ -61,9 +70,34 @@ test('home resume survives refresh and previous/next navigation', async ({ page,
   await sidebar(page, isMobile)
   await page.locator('#nav-home').click()
   await expect(page.locator('[data-hero-primary]')).toHaveText(/继续学习/)
-  await page.reload()
+  await page.reload({ waitUntil: 'domcontentloaded' })
   await page.locator('[data-hero-primary]').click()
   await expect(page).toHaveURL(/\/q\/60$/)
+})
+
+test('question navigation keeps header collapsed through scroll reset and upward input reveals it', async ({ page }) => {
+  await mockApi(page)
+  await visit(page, '/q/60')
+  const header = page.locator('#app-header')
+  await expect(header).not.toHaveClass(/header-hidden/)
+  await page.getByRole('button', { name: '下一题 →', exact: true }).click()
+  await expect(page).toHaveURL(/\/q\/61$/)
+  await expect(header).toHaveClass(/header-hidden/)
+  await expect.poll(() => header.evaluate(el => el.getBoundingClientRect().height)).toBe(0)
+  await expect.poll(() => page.locator('#main-scroll-container').evaluate(el => el.scrollTop)).toBe(0)
+  await page.getByRole('button', { name: '← 上一题', exact: true }).click()
+  await expect(page).toHaveURL(/\/q\/60$/)
+  await expect(header).toHaveClass(/header-hidden/)
+  await page.locator('#main-scroll-container').hover(); await page.mouse.wheel(0, -100)
+  await expect(header).not.toHaveClass(/header-hidden/)
+  await page.getByRole('button', { name: /查看答案/ }).click()
+  await page.locator('#main-scroll-container').evaluate(el => { el.scrollTop = el.scrollHeight })
+  await page.getByRole('button', { name: '下一题 →', exact: true }).click()
+  await expect(page).toHaveURL(/\/q\/61$/)
+  await expect.poll(() => header.evaluate(el => el.getBoundingClientRect().height)).toBe(0)
+  await page.locator('#detail-navbar a').first().click()
+  await expect(page).toHaveURL(/\/$/)
+  await expect(header).not.toHaveClass(/header-hidden/)
 })
 
 test('legacy hash detail links normalize before router initialization', async ({ page }) => {
@@ -81,7 +115,7 @@ test('list has ten items, persists page, clamps invalid deep links', async ({ pa
   await page.getByRole('button', { name: '下一页', exact: true }).click()
   await expect(page).toHaveURL(/page=2/)
   await expect(page.locator('[data-question-id]').first()).toHaveAttribute('data-question-id', '11')
-  await page.reload()
+  await page.reload({ waitUntil: 'domcontentloaded' })
   await expect(page.locator('[data-question-id]').first()).toHaveAttribute('data-question-id', '11')
   await page.goto('/list?page=999')
   await expect(page).toHaveURL(/page=5/)
@@ -89,6 +123,64 @@ test('list has ten items, persists page, clamps invalid deep links', async ({ pa
   await page.goto('/list?page=abc')
   await expect(page).toHaveURL(/\/list$/)
   await expect(page.locator('[data-question-id]')).toHaveCount(10)
+})
+
+test('pagination starts at the new first question without header or row jitter', async ({ page }) => {
+  await mockApi(page)
+  await visit(page, '/list')
+  await page.evaluate(() => document.fonts.ready)
+  const header = page.locator('#app-header')
+  const first = page.locator('[data-question-id]').first()
+  const checkPage = async (control, id, expectedPage) => {
+    // Use a real downward scroll, rather than scrollIntoView's nearest-edge direction.
+    await page.locator('#main-scroll-container').evaluate(el => { el.scrollTop = 0 })
+    await page.locator('#main-scroll-container').hover()
+    await page.mouse.wheel(0, -100)
+    await expect.poll(() => header.evaluate(el => el.getBoundingClientRect().height)).toBe(64)
+    await page.locator('#main-scroll-container').evaluate(el => { el.scrollTop = el.scrollHeight })
+    await expect.poll(() => header.evaluate(el => el.getBoundingClientRect().height)).toBe(0)
+    await page.locator('[data-question-list]').evaluate(el => {
+      window.pageFrameSamples = []
+      const observer = new MutationObserver(() => {
+        const row = el.querySelector('[data-question-id]')
+        if (!row || row.dataset.questionId === window.pageOldFirst) return
+        observer.disconnect()
+        let frames = 0
+        const sample = () => {
+          const scroller = document.getElementById('main-scroll-container')
+          window.pageFrameSamples.push({
+            id: row.dataset.questionId,
+            header: document.getElementById('app-header').getBoundingClientRect().height,
+            top: row.getBoundingClientRect().top - scroller.getBoundingClientRect().top,
+          })
+          if (++frames < 24) requestAnimationFrame(sample)
+        }
+        requestAnimationFrame(sample)
+      })
+      window.pageOldFirst = el.querySelector('[data-question-id]').dataset.questionId
+      observer.observe(el, { childList: true, subtree: true })
+    })
+    await control.click()
+    await expect(first).toHaveAttribute('data-question-id', String(id))
+    await expect.poll(() => page.evaluate(() => window.pageFrameSamples.length)).toBeGreaterThanOrEqual(5)
+    const frames = await page.evaluate(() => window.pageFrameSamples)
+    expect(frames.every(frame => frame.id === String(id))).toBe(true)
+    expect(Math.max(...frames.map(frame => frame.header))).toBe(0)
+    expect(Math.max(...frames.map(frame => frame.top)) - Math.min(...frames.map(frame => frame.top))).toBeLessThan(1)
+    const position = await first.evaluate(el => {
+      const scroller = document.getElementById('main-scroll-container')
+      return { top: el.getBoundingClientRect().top - scroller.getBoundingClientRect().top, height: scroller.clientHeight, remaining: scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight }
+    })
+    expect(position.top).toBeGreaterThanOrEqual(-1)
+    expect(position.top).toBeLessThan(position.height - 30)
+    // A short last page clamps at the end of the scroller instead of overscrolling.
+    if (position.remaining > 1) expect(position.top).toBeLessThan(1)
+    await expect(page.locator('[data-list-pagination] [aria-current="page"]')).toHaveText(String(expectedPage))
+  }
+  await checkPage(page.getByRole('button', { name: '下一页', exact: true }), 11, 2)
+  await checkPage(page.getByRole('button', { name: '上一页', exact: true }), 1, 1)
+  await checkPage(page.getByRole('button', { name: '第 5 页', exact: true }), 990, 5)
+  await expect(page.getByRole('button', { name: '下一页', exact: true })).toBeDisabled()
 })
 
 test('filters patch existing nodes without whole-view animations', async ({ page }) => {
@@ -180,7 +272,7 @@ test('answer sections code copy and study preference survive route changes', asy
   await page.getByRole('button', { name: '下一题 →', exact: true }).click()
   await expect(page.locator('#answer-content')).toContainText('核心 2')
   await expect(page.locator('#answer-code')).toBeHidden()
-  await page.reload()
+  await page.reload({ waitUntil: 'domcontentloaded' })
   await expect(page.locator('#answer-content')).toContainText('核心 2')
 })
 

@@ -13,7 +13,7 @@ try {
     page.on('pageerror', e => errors.push(e.message))
     page.on('response', r => { if (r.url().startsWith(base + '/static/') && r.status() >= 400) badAssets.push([r.status(), r.url()]) })
     const go = async path => { await page.goto(base + path, { waitUntil: 'domcontentloaded' }); await page.locator('[data-home-view], [data-list-mode], [data-detail-id], [data-login-empty]').first().waitFor({ timeout: 20000 }).catch(async () => { await page.locator('#view-container h1').waitFor() }) }
-    const shot = name => page.screenshot({ path: folder + name })
+    const shot = name => process.env.SMOKE_SCREENSHOTS === '0' ? Promise.resolve() : page.screenshot({ path: folder + name })
     await go('/')
     await page.locator('[data-hero-primary]').waitFor()
     assert.equal(await page.locator('#nav-all-count').innerText(), '510')
@@ -27,6 +27,21 @@ try {
     await page.locator('[data-question-id]').first().waitFor()
     assert.equal(await page.locator('[data-question-id]').first().getAttribute('data-question-id'), '21')
     if (width === 1440) { await shot('03-list-pagination.png'); await page.locator('#main-scroll-container').evaluate(el => { el.scrollTop = el.scrollHeight }); await shot('04-list-pager-bottom.png') }
+    await page.getByRole('button', { name: '下一页', exact: true }).scrollIntoViewIfNeeded()
+    await page.waitForFunction(() => document.getElementById('app-header').getBoundingClientRect().height === 0)
+    await page.getByRole('button', { name: '下一页', exact: true }).click()
+    await page.waitForFunction(() => document.querySelector('[data-question-id]')?.dataset.questionId === '31')
+    const frames = await page.evaluate(() => new Promise(resolve => {
+      const samples = []
+      const sample = () => {
+        const scroller = document.getElementById('main-scroll-container')
+        samples.push({ top: document.querySelector('[data-question-id]').getBoundingClientRect().top - scroller.getBoundingClientRect().top, header: document.getElementById('app-header').getBoundingClientRect().height })
+        if (samples.length < 24) requestAnimationFrame(sample)
+        else resolve(samples)
+      }
+      sample()
+    }))
+    assert.ok(frames.every(frame => Math.abs(frame.top) < 1 && frame.header === 0), 'Pagination must place the new first question at the top without header movement')
     await go('/list?q=jvm'); await page.locator('[data-question-id]').first().waitFor()
     if (width === 1440) await shot('05-list-search.png')
     await go('/q/60'); await page.locator('[data-detail-id="60"]').waitFor()
@@ -52,7 +67,7 @@ try {
     await page.locator('#main-scroll-container').evaluate(el => { el.scrollTop = 500 })
     await page.getByRole('button', { name: '下一题 →', exact: true }).click()
     await page.locator('[data-detail-id="61"]').waitFor()
-    await page.waitForFunction(() => !document.getElementById('app-header').classList.contains('header-hidden'))
+    await page.waitForFunction(() => document.getElementById('app-header').classList.contains('header-hidden'))
     if (width === 1440) assert.ok(await page.evaluate(() => window.retainedRow.isConnected))
     await go('/')
     assert.match(await page.locator('[data-hero-primary]').innerText(), /继续学习/)

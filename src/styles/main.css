@@ -109,6 +109,9 @@
     }
     button:not(:disabled) { -webkit-tap-highlight-color: transparent; }
     button:not(:disabled):active { transform: scale(0.97); }
+    /* List controls change data without a press-time position/size bounce. */
+    [data-list-pagination] button:not(:disabled):active,
+    [data-list-filters] button:not(:disabled):active { transform: none; }
     @media (prefers-reduced-motion: reduce) {
       #app-header { transition: none; }
       button:not(:disabled):active { transform: none; }

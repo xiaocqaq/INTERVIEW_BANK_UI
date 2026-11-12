@@ -79,6 +79,16 @@ const requestedPage = computed(() => {
 const page = computed(() => Math.min(pendingPage.value ?? requestedPage.value, totalPages.value))
 const shown = computed(() => filtered.value.slice((page.value - 1) * PAGE_SIZE, page.value * PAGE_SIZE))
 
+// Run after Vue patches the rows, before the browser paints the new page.
+watch(page, () => {
+  const scroller = document.getElementById('main-scroll-container')
+  const firstRow = scroller?.querySelector('[data-question-id]')
+  if (!firstRow) return
+  const top = scroller.scrollTop + firstRow.getBoundingClientRect().top - scroller.getBoundingClientRect().top
+  scroller.scrollTo({ top, behavior: 'instant' })
+  scroller.dispatchEvent(new Event('workspace-scroll-reset'))
+}, { flush: 'post' })
+
 // Wait for real data before clamping a deep-linked page against the result count.
 watch([() => route.query.page, totalPages, () => bank.ready, () => bank.loading, pendingPage], () => {
   if (!bank.ready || bank.loading || pendingPage.value !== null) return
