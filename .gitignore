@@ -1,0 +1,17 @@
+# 编辑器
+.idea/
+.vscode/
+*.swp
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 线上备份 / 历史版本（不要提交）
+*.bak
+*.bak-*
+index.html.bak*
+
+# 日志与临时文件
+*.log
+*.tmp

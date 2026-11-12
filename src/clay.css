@@ -1,0 +1,183 @@
+/* ============================================================
+   面试刷题库 · 赤陶暖棕（clay）主题 2026-11-08
+   与 mxiao.top / doc.mxiao.top 同一套 tokens。
+   本文件在所有既有样式之后加载，只覆盖颜色、字体与代码高亮，
+   不改任何布局与交互。
+   ============================================================ */
+
+/* ---------- 1. 页面级变量（index.html 内联 :root） ---------- */
+:root {
+  --bg-canvas: #faf7f2;
+  --bg-surface: #fffdf9;
+  --bg-elevated: #f3ece2;
+  --border-subtle: #ebdfd1;
+  --text-primary: #241b14;
+  --text-secondary: #5e4c3f;
+
+  /* style.css 遗留的旧主题变量也一并接管 */
+  --bg: #faf7f2;
+  --bg-sidebar: #f5efe6;
+  --bg-topbar: rgba(250, 247, 242, .88);
+  --border-topbar: rgba(60, 47, 38, .10);
+  --bg-elevated: #f3ece2;
+  --bg-input: #fffdf9;
+  --bg-hover: #f3ece2;
+  --bg-active: #ecdcc9;
+  --border: #ebdfd1;
+  --border-soft: #f0e6da;
+  --border-control: #e4d7c7;
+  --text: #241b14;
+  --text-body: #3c2f26;
+  --text-title: #241b14;
+  --text-h2: #4a2114;
+  --text-secondary: #5e4c3f;
+  --muted: #7a6758;
+  --faint: #9c8b7c;
+  --primary: #8f4326;
+  --primary-deep: #7c3820;
+  --accent-bar: #8f4326;
+  --primary-soft: #f5e7da;
+  --link: #98472a;
+  --code-bg: #f3ece2;
+  --code-text: #7c3820;
+  --pre-bg: #2a1c15;
+  --pre-text: #f0e2d6;
+  --danger: #a8432f;
+  --table-head-bg: #f3ece2;
+  --table-head-text: #4a2114;
+  --table-stripe: #faf5ee;
+  --quote-bg: #f6efe6;
+  --quote-text: #5e4c3f;
+  --cnt-active-bg: #ecdcc9;
+  --card: #fffdf9;
+  --selection: rgba(143, 67, 38, .18);
+}
+
+html.dark {
+  --bg-canvas: #14100d;
+  --bg-surface: #1c1613;
+  --bg-elevated: #251d18;
+  --border-subtle: #322822;
+  --text-primary: #f3ece5;
+  --text-secondary: #b4a496;
+
+  --bg: #14100d;
+  --bg-sidebar: #1a1411;
+  --bg-topbar: rgba(20, 16, 13, .88);
+  --border-topbar: rgba(240, 226, 214, .10);
+  --bg-elevated: #251d18;
+  --bg-input: #1c1613;
+  --bg-hover: #251d18;
+  --bg-active: #32241c;
+  --border: #322822;
+  --border-soft: #2a221c;
+  --border-control: #3a2d25;
+  --text: #f3ece5;
+  --text-body: #dccfc4;
+  --text-title: #f7f1e9;
+  --text-h2: #f0e2d6;
+  --text-secondary: #b4a496;
+  --muted: #9c8b7c;
+  --faint: #7d6d5f;
+  --primary: #e6a184;
+  --primary-deep: #f0b79c;
+  --accent-bar: #e6a184;
+  --primary-soft: #37241c;
+  --link: #e8ad8f;
+  --code-bg: #251d18;
+  --code-text: #f0cdb4;
+  --pre-bg: #1d1411;
+  --pre-text: #f0e2d6;
+  --danger: #d98a76;
+  --table-head-bg: #251d18;
+  --table-head-text: #e6c9b4;
+  --table-stripe: #1a1411;
+  --quote-bg: #221a15;
+  --quote-text: #cfbeae;
+  --cnt-active-bg: #3a2a20;
+  --card: #1c1613;
+  --selection: rgba(230, 161, 132, .22);
+}
+
+/* ---------- 2. 字体与基础 ---------- */
+body {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'PingFang SC',
+               'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+}
+::selection { background: var(--selection); }
+:focus-visible { outline: 2px solid #8f4326; outline-offset: 2px; }
+html.dark :focus-visible { outline-color: #e6a184; }
+
+code, pre, .font-mono, kbd, samp {
+  font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(143, 67, 38, .28); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(143, 67, 38, .45); }
+html.dark ::-webkit-scrollbar-thumb { background: rgba(230, 161, 132, .25); }
+html.dark ::-webkit-scrollbar-thumb:hover { background: rgba(230, 161, 132, .4); }
+
+/* 顶栏写死的深色，改成暖底 */
+#app-header { background-color: rgba(250, 247, 242, .86) !important; }
+html.dark #app-header { background-color: rgba(20, 16, 13, .86) !important; }
+
+/* ---------- 3. 代码高亮（接管 pygments One Dark） ---------- */
+.codehilite {
+  background: #2a1c15 !important;
+  color: #f0e2d6 !important;
+  border: 1px solid rgba(240, 226, 214, .08);
+  border-radius: 10px;
+}
+.codehilite .hll { background-color: #3d2a1e !important; }
+.codehilite .c, .codehilite .ch, .codehilite .cm, .codehilite .cp,
+.codehilite .cpf, .codehilite .c1, .codehilite .cs { color: #9c8272 !important; font-style: italic; }
+.codehilite .k, .codehilite .kd, .codehilite .kn, .codehilite .kp, .codehilite .kr { color: #e0a184 !important; }
+.codehilite .kc, .codehilite .kt, .codehilite .nb, .codehilite .nc { color: #e3cf9c !important; }
+.codehilite .s, .codehilite .s1, .codehilite .s2, .codehilite .sb, .codehilite .sc,
+.codehilite .sd, .codehilite .se, .codehilite .sh, .codehilite .si, .codehilite .sx,
+.codehilite .sr, .codehilite .ss { color: #e3cf9c !important; }
+.codehilite .m, .codehilite .mf, .codehilite .mh, .codehilite .mi, .codehilite .mo { color: #d3bda9 !important; }
+.codehilite .nf, .codehilite .fm, .codehilite .nd { color: #cf8a6b !important; font-weight: 600; }
+.codehilite .o, .codehilite .ow { color: #c9a08a !important; }
+.codehilite .n, .codehilite .na, .codehilite .nv, .codehilite .nx, .codehilite .nt,
+.codehilite .no, .codehilite .nl, .codehilite .nn, .codehilite .py, .codehilite .ne,
+.codehilite .ni, .codehilite .go, .codehilite .gd, .codehilite .gr, .codehilite .gt { color: #f0cdb4 !important; }
+.codehilite .p, .codehilite .w, .codehilite .ld, .codehilite .l, .codehilite .x,
+.codehilite .ge, .codehilite .ges, .codehilite .gp, .codehilite .gs { color: #cfbeae !important; }
+.codehilite .gi { color: #a8b58c !important; }
+
+/* 行内代码 */
+.answer-prose code:not(pre code), .prose code:not(pre code) {
+  background: #f3ece2; color: #7c3820;
+  border: 1px solid #ebdfd1;
+}
+html.dark .answer-prose code:not(pre code), html.dark .prose code:not(pre code) {
+  background: #251d18; color: #f0cdb4; border-color: #322822;
+}
+/* 表格头/引用 */
+.answer-prose th, .prose th { background: #f3ece2; color: #4a2114; }
+html.dark .answer-prose th, html.dark .prose th { background: #251d18; color: #e6c9b4; }
+.answer-prose blockquote, .prose blockquote { border-left-color: #8f4326; background: #f6efe6; }
+html.dark .answer-prose blockquote, html.dark .prose blockquote { border-left-color: #e6a184; background: #221a15; }
+
+/* ---------- 4. 硬编码深底与主 CTA（2026-11-08 二次修正） ---------- */
+/* body / 侧栏在暗色下用的是写死的蓝黑，改暖 */
+html.dark body { background-color: #14100d !important; }
+html.dark #app-sidebar { background-color: #171210 !important; }
+
+/* 主按钮：近黑 → 赤陶 */
+button.bg-slate-900 {
+  background-color: #8f4326 !important;
+  color: #fffdf9 !important;
+}
+button.bg-slate-900:hover { background-color: #7c3820 !important; }
+html.dark button.bg-slate-900 {
+  background-color: #e6a184 !important;
+  color: #241b14 !important;
+}
+html.dark button.bg-slate-900:hover { background-color: #f0b79c !important; }

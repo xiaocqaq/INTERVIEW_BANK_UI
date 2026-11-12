@@ -1,0 +1,3180 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>面试刷题库 · Java / Python / 大模型应用</title>
+  <script src="/static/tailwind.3.4.17.js"></script>
+  <link rel="stylesheet" href="/static/pygments.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238f4326'%3E%3Cpath d='M9 12l2 2 4-4m5.6-4A11.95 11.95 0 0112 2.9a11.95 11.95 0 01-8.6 3A12 12 0 003 9c0 5.6 3.8 10.3 9 11.6 5.2-1.3 9-6 9-11.6 0-1-.1-2.1-.4-3z'/%3E%3C/svg%3E">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Manrope', '-apple-system', 'BlinkMacSystemFont', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            white: '#fffdf9',
+            slate: {
+              50: '#faf7f2', 100: '#f4ede4', 200: '#e9ddcf', 300: '#d8c6b4',
+              400: '#b7a08c', 500: '#96806c', 600: '#7a6758', 700: '#5e4c3f',
+              800: '#3a2c23', 900: '#241b14', 950: '#16100d'
+            },
+            gray: {
+              50: '#faf7f2', 100: '#f4ede4', 200: '#e9ddcf', 300: '#d8c6b4',
+              400: '#b7a08c', 500: '#96806c', 600: '#7a6758', 700: '#5e4c3f',
+              800: '#3a2c23', 900: '#241b14', 950: '#16100d'
+            },
+            brand: {
+              50: '#faf3ec', 100: '#f5e7da', 200: '#ecd0b9', 300: '#ddb193',
+              400: '#ca8d6e', 500: '#ad6143', 600: '#8f4326', 700: '#7c3820',
+              800: '#632c1a', 900: '#4a2114'
+            },
+            emerald: {
+              50: '#faf3ec', 100: '#f5e7da', 200: '#ecd0b9', 300: '#ddb193',
+              400: '#ca8d6e', 500: '#ad6143', 600: '#8f4326', 700: '#7c3820',
+              800: '#632c1a', 900: '#4a2114', 950: '#2b1409'
+            },
+            amber: {
+              50: '#fdf7ea', 100: '#f9ebcf', 200: '#f0d6a8', 300: '#e3b97c',
+              400: '#d09b52', 500: '#b17d30', 600: '#98631f', 700: '#7d5018',
+              800: '#633f13', 900: '#4c300f'
+            },
+            orange: {
+              50: '#fdf7ea', 100: '#f9ebcf', 200: '#f0d6a8', 300: '#e3b97c',
+              400: '#d09b52', 500: '#b5703a', 600: '#98631f', 700: '#7d5018',
+              800: '#633f13', 900: '#4c300f'
+            },
+            rose: {
+              50: '#fdf2ee', 100: '#fae2db', 200: '#f2c6ba', 300: '#e5a293',
+              400: '#d47c6b', 500: '#bd5b48', 600: '#a8432f', 700: '#8c3524',
+              800: '#712b1d', 900: '#5a2318'
+            },
+            red: {
+              50: '#fdf2ee', 100: '#fae2db', 200: '#f2c6ba', 300: '#e5a293',
+              400: '#d47c6b', 500: '#bd5b48', 600: '#a8432f', 700: '#8c3524',
+              800: '#712b1d', 900: '#5a2318'
+            },
+            sky:    { 400: '#6e97a6', 500: '#3f6d7d', 600: '#35596a' },
+            purple: { 400: '#a1848c', 500: '#7a5a5f', 600: '#63474d', 700: '#523b40' },
+            indigo: { 400: '#a1848c', 500: '#7a5a5f', 600: '#63474d' },
+            teal:   { 500: '#5c7c53', 600: '#4f7046', 700: '#425c3a' },
+            green:  { 400: '#7d9a72', 500: '#5c7c53', 600: '#4f7046', 700: '#425c3a' }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --bg-canvas: #f3ece5;
+      --bg-surface: #ffffff;
+      --bg-elevated: #f1f5f9;
+      --border-subtle: #e2e8f0;
+      --text-primary: #241b14;
+      --text-secondary: #475569;
+    }
+    html.dark {
+      --bg-canvas: #14100d;
+      --bg-surface: #111827;
+      --bg-elevated: #1e293b;
+      --border-subtle: #1f2937;
+      --text-primary: #f3ece5;
+      --text-secondary: #94a3b8;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+    /* Custom thin scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.3);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.5);
+    }
+    .glass-header {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .bento-card {
+      transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.18s ease;
+    }
+    .bento-card:hover {
+      transform: translateY(-2px);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.2s ease-out forwards;
+    }
+    /* ---------- 后端 Markdown 渲染出的 answer_html 排版 ---------- */
+    .answer-prose p { margin: 0.55em 0; }
+    .answer-prose p:first-child { margin-top: 0; }
+    .answer-prose p:last-child { margin-bottom: 0; }
+    .answer-prose ul, .answer-prose ol { margin: 0.55em 0 0.55em 1.2em; padding-left: 0.6em; }
+    .answer-prose ul { list-style: disc; }
+    .answer-prose ol { list-style: decimal; }
+    .answer-prose li { margin: 0.25em 0; }
+    .answer-prose strong { font-weight: 700; color: #241b14; }
+    html.dark .answer-prose strong { color: #f3ece5; }
+    .answer-prose code { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 0.86em; padding: 0.12em 0.36em; border-radius: 0.3rem; background: rgba(148,163,184,0.18); }
+    .answer-prose a { color: #059669; text-decoration: underline; text-underline-offset: 2px; }
+    html.dark .answer-prose a { color: #34d399; }
+    .answer-prose blockquote { margin: 0.6em 0; padding-left: 0.9em; border-left: 3px solid rgba(16,185,129,0.35); color: #475569; }
+    html.dark .answer-prose blockquote { color: #94a3b8; }
+    .answer-prose table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.92em; }
+    .answer-prose th, .answer-prose td { border: 1px solid rgba(148,163,184,0.35); padding: 0.45em 0.7em; text-align: left; vertical-align: top; }
+    .answer-prose th { background: rgba(148,163,184,0.14); font-weight: 700; }
+    .answer-prose h3, .answer-prose h4 { font-weight: 700; margin: 0.9em 0 0.4em; }
+    /* 代码块（pygments one-dark 配色，浅色主题下也保持深底） */
+    .answer-prose .codehilite, .avoid-dark-invert .codehilite {
+      border-radius: 0.75rem; margin: 0.8em 0; overflow-x: auto;
+      border: 1px solid rgba(148,163,184,0.25);
+    }
+    .answer-prose .codehilite pre, .avoid-dark-invert .codehilite pre {
+      margin: 0; padding: 1rem 1.1rem; overflow-x: auto; line-height: 1.55;
+      font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace; font-size: 12.5px;
+    }
+    .answer-prose .codehilite code, .avoid-dark-invert .codehilite code { background: none; padding: 0; font-size: inherit; }
+    /* 顶栏下滑自动隐藏 / 上滑显示（收起高度，不占位） */
+    #app-header {
+      flex-shrink: 0; overflow: hidden;
+      transition: height 0.28s ease, opacity 0.2s ease, border-color 0.2s ease;
+    }
+    #app-header.header-hidden {
+      height: 0 !important;
+      min-height: 0 !important;
+      opacity: 0;
+      border-bottom-width: 0;
+      pointer-events: none;
+    }
+    /* 移动端侧栏原先靠 pt-16 避开顶栏，顶栏收起时同步归零 */
+    @media (max-width: 1023px) {
+      body.header-collapsed #app-sidebar { padding-top: 0 !important; }
+    }
+    /* 视图切换动效：旧内容做「快照淡出」，新内容做位移淡入 */
+    #view-container { position: relative; }
+    #view-container > .view-ghost {
+      position: absolute; left: 0; right: 0; top: 0; z-index: 20;
+      pointer-events: none; background: var(--bg-canvas); will-change: opacity;
+    }
+    button:not(:disabled) { -webkit-tap-highlight-color: transparent; }
+    button:not(:disabled):active { transform: scale(0.97); }
+    @media (prefers-reduced-motion: reduce) {
+      #app-header { transition: none; }
+      button:not(:disabled):active { transform: none; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/clay.css?v=20261108">
+  <meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14100d" media="(prefers-color-scheme: dark)">
+<script src="https://mxiao.top/assets/theme-sync.js?v=20261108"></script>
+<script>
+(function () {
+  if (!window.MxTheme) return
+  var m = MxTheme.get()
+  var dark = m === 'dark' || (m === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  if (dark) document.documentElement.classList.add('dark')
+})()
+</script>
+</head>
+<body class="h-screen overflow-hidden flex flex-col bg-slate-50 dark:bg-[#14100d] text-slate-900 dark:text-slate-100 selection:bg-brand-500/20 selection:text-brand-600 dark:selection:text-brand-300 transition-colors duration-200">
+
+  <!-- ======================= TOP STICKY HEADER ======================= -->
+  <header id="app-header" class="sticky top-0 z-30 h-16 glass-header bg-white/85 dark:bg-[#0f1624]/85 border-b border-slate-200/80 dark:border-slate-800/80 px-3 sm:px-4 lg:px-6 flex items-center justify-between gap-2 sm:gap-3 flex-nowrap">
+    <!-- Left: Mobile Menu Button + Brand Logo -->
+    <div class="flex items-center gap-3 min-w-0">
+      <button id="btn-mobile-menu" type="button" onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" aria-label="打开分类导航">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <a href="/" onclick="navigateTo('/'); return false;" class="flex items-center gap-2.5 group focus:outline-none shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-teal-600 flex items-center justify-center text-white shadow-sm shadow-brand-500/20 group-hover:scale-105 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <div class="hidden sm:flex flex-col min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-base tracking-tight text-slate-900 dark:text-white">面试刷题库</span>
+            <span class="hidden sm:inline-block text-[10px] font-mono font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20">INTERVIEW BANK</span>
+          </div>
+          <span id="brand-subtitle" class="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:block" data-count-total>Java · Python · 大模型应用</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Center: Global Search Input -->
+    <div class="flex-1 min-w-0 max-w-md mx-1 sm:mx-2">
+      <form id="global-search-form" onsubmit="handleGlobalSearchSubmit(event)" class="relative group">
+        <svg class="w-4 h-4 text-slate-400 group-focus-within:text-brand-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input
+          id="global-search-input"
+          type="text"
+          placeholder="搜索题目、考点（如 Spring / GIL / RAG），回车搜索…"
+          oninput="handleSearchInputChange(this.value)"
+          class="w-full pl-9 pr-16 py-2 text-sm rounded-xl bg-slate-100/90 dark:bg-slate-800/80 border border-transparent focus:border-brand-500/60 focus:bg-white dark:focus:bg-slate-900 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/15 transition-all"
+        />
+        <button
+          id="btn-clear-search"
+          type="button"
+          onclick="clearGlobalSearch()"
+          class="hidden absolute right-9 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-md"
+          title="清空搜索"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+        <kbd class="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">/</kbd>
+      </form>
+    </div>
+
+    <!-- Right: Mastery Summary Pill + Theme Switcher + Guide + Login -->
+    <div class="flex items-center gap-2 sm:gap-2.5">
+      <!-- Live Progress Pill -->
+      <button
+        id="btn-header-progress"
+        type="button"
+        onclick="navigateTo('/wrongbook')"
+        class="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200/70 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 text-xs transition"
+        title="点击查看错题本与掌握进度"
+      >
+        <span class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span id="header-mastered-count">0</span> 掌握
+        </span>
+        <span class="text-slate-300 dark:text-slate-600">|</span>
+        <span class="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-medium">
+          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+          <span id="header-fuzzy-count">0</span> 模糊
+        </span>
+        <span class="text-slate-300 dark:text-slate-600">|</span>
+        <span class="flex items-center gap-1 text-rose-600 dark:text-rose-400 font-medium">
+          <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+          <span id="header-unknown-count">0</span> 不会
+        </span>
+      </button>
+
+      <!-- 3-Way Theme Switcher (Light / Dark / System) -->
+      <button
+        id="theme-btn-mobile"
+        type="button"
+        onclick="cycleThemeMode()"
+        class="sm:hidden shrink-0 p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70 transition"
+        title="切换主题"
+        aria-label="切换主题"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+        </svg>
+      </button>
+
+      <div class="hidden sm:flex items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70" role="group" aria-label="主题切换">
+        <button
+          id="theme-btn-light"
+          type="button"
+          onclick="setThemeMode('light')"
+          class="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
+          title="浅色模式"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+        </button>
+        <button
+          id="theme-btn-dark"
+          type="button"
+          onclick="setThemeMode('dark')"
+          class="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
+          title="深色模式"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+        <button
+          id="theme-btn-system"
+          type="button"
+          onclick="setThemeMode('system')"
+          class="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
+          title="跟随系统"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Login / User Button -->
+      <button
+        id="btn-auth-trigger"
+        type="button"
+        onclick="handleAuthButtonClick()"
+        class="shrink-0 whitespace-nowrap inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-brand-600 hover:bg-brand-500 text-white shadow-sm shadow-brand-600/20 transition"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+        </svg>
+        <span id="auth-btn-label" class="hidden sm:inline">登录 / 注册</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ======================= MAIN 2-COLUMN WORKSPACE ======================= -->
+  <div class="flex-1 flex overflow-hidden relative">
+
+    <!-- Mobile Backdrop -->
+    <div
+      id="mobile-sidebar-backdrop"
+      onclick="closeMobileSidebar()"
+      class="fixed inset-0 z-20 bg-slate-900/50 backdrop-blur-xs hidden lg:hidden"
+    ></div>
+
+    <!-- ======================= LEFT SIDEBAR NAVIGATION ======================= -->
+    <aside
+      id="app-sidebar"
+      class="fixed lg:static inset-y-0 left-0 z-20 w-80 bg-white dark:bg-[#0d1320] border-r border-slate-200/80 dark:border-slate-800/80 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out pt-16 lg:pt-0"
+    >
+      <!-- Sidebar Top Quick Links -->
+      <div class="p-3.5 border-b border-slate-100 dark:border-slate-800/70 space-y-1">
+        <button
+          id="nav-home"
+          type="button"
+          onclick="navigateTo('/')"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-colors"
+        >
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span>题库首页</span>
+          </span>
+        </button>
+
+        <button
+          id="nav-all"
+          type="button"
+          onclick="navigateTo('/list')"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-colors"
+        >
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+            </svg>
+            <span>全部题目</span>
+          </span>
+          <span id="nav-all-count" class="px-2 py-0.5 text-xs font-mono rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">—</span>
+        </button>
+
+        <button
+          id="nav-favorites"
+          type="button"
+          onclick="navigateTo('/favorites')"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-colors"
+        >
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+            </svg>
+            <span>我的收藏</span>
+          </span>
+          <span id="sidebar-fav-count" class="px-2 py-0.5 text-xs font-mono rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">0</span>
+        </button>
+
+        <button
+          id="nav-wrongbook"
+          type="button"
+          onclick="navigateTo('/wrongbook')"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-colors"
+        >
+          <span class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <span>错题本 (待攻克)</span>
+          </span>
+          <span id="sidebar-wrong-count" class="px-2 py-0.5 text-xs font-mono rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400">0</span>
+        </button>
+      </div>
+
+      <!-- Sidebar Mode Switcher: 分类导航 vs 题目列表 (学习模式自动切换) -->
+      <div class="px-3.5 pt-3 pb-2 border-b border-slate-100 dark:border-slate-800/70 bg-slate-50/50 dark:bg-slate-900/30">
+        <div class="grid grid-cols-2 p-1 rounded-xl bg-slate-200/70 dark:bg-slate-800/90 text-xs font-semibold">
+          <button
+            id="sidebar-tab-questions"
+            type="button"
+            onclick="switchSidebarTab('questions')"
+            class="py-1.5 px-2 rounded-lg flex items-center justify-center gap-1.5 transition"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+            <span>本节题目</span>
+          </button>
+          <button
+            id="sidebar-tab-categories"
+            type="button"
+            onclick="switchSidebarTab('categories')"
+            class="py-1.5 px-2 rounded-lg flex items-center justify-center gap-1.5 transition"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+            </svg>
+            <span>题库分类</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sidebar Scrollable Question List (Shown when studying or when '题目列表' tab is active) -->
+      <div id="sidebar-question-list" class="hidden flex-1 flex-col overflow-hidden">
+        <!-- Dynamically populated by renderSidebarQuestionList() -->
+      </div>
+
+      <!-- Sidebar Scrollable Category Tree -->
+      <div id="sidebar-categories" class="flex-1 overflow-y-auto p-3.5 space-y-4">
+        <!-- Dynamically populated by renderSidebarCategories() -->
+      </div>
+
+      <!-- Sidebar Footer: Cloud Sync Status -->
+      <div class="p-3.5 border-t border-slate-200/70 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40">
+        <div class="flex items-center justify-between text-xs">
+          <div class="flex items-center gap-2">
+            <span id="sync-status-dot" class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+            <span id="sync-status-text" class="text-slate-600 dark:text-slate-400 font-medium">未登录 · 进度不保存</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ======================= RIGHT MAIN CONTENT AREA ======================= -->
+    <main id="main-scroll-container" class="flex-1 overflow-y-auto focus:outline-none">
+      <div id="view-container" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
+        <!-- Dynamically rendered by router -->
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ======================= LOGIN / REGISTER MODAL ======================= -->
+  <div id="login-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+    <div class="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden animate-fade-in">
+      <div class="px-6 pt-6 pb-4 flex items-start justify-between border-b border-slate-100 dark:border-slate-800">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">登录面试刷题库</h3>
+        </div>
+        <button id="btn-close-login" type="button" onclick="closeLoginModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <form id="login-form" onsubmit="submitLoginForm(event)" class="p-6 space-y-4">
+        <div id="login-error" class="hidden px-3 py-2 rounded-xl text-xs font-medium bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/25"></div>
+        <div>
+          <label for="login-username" class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5">用户名 / 邮箱</label>
+          <input
+            id="login-username"
+            type="text"
+            required
+            placeholder="请输入账号 / 邮箱"
+            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
+          />
+        </div>
+        <div>
+          <label for="login-password" class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5">密码</label>
+          <input
+            id="login-password"
+            type="password"
+            required
+            placeholder="请输入登录密码"
+            class="w-full px-3.5 py-2.5 text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
+          />
+        </div>
+        <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pt-1">
+          <label class="inline-flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" checked class="rounded border-slate-300 text-brand-600 focus:ring-brand-500" />
+            <span>保持登录状态，自动云同步</span>
+          </label>
+          <a
+            id="btn-register-link"
+            href="https://ai.mxiao.top/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 font-semibold text-brand-600 dark:text-brand-400 hover:underline"
+          >
+            <span>注册账号</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+        </div>
+        <div class="pt-3 flex items-center justify-end gap-2.5">
+          <button
+            type="button"
+            onclick="closeLoginModal()"
+            class="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+          >
+            取消
+          </button>
+          <button
+            id="btn-login-submit"
+            type="submit"
+            class="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-brand-600 hover:bg-brand-500 shadow-sm shadow-brand-600/20 transition"
+          >
+            登录并同步
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================= CONFIRM DIALOG ======================= -->
+  <div id="confirm-modal" onclick="if (event.target === this) resolveConfirm(false)" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+    <div class="w-full max-w-sm rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden animate-fade-in">
+      <div class="p-5 flex items-start gap-3.5">
+        <div id="confirm-icon-wrap" class="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center bg-rose-500/10 text-rose-500">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+        </div>
+        <div class="min-w-0 pt-0.5">
+          <h3 id="confirm-title" class="text-base font-bold text-slate-900 dark:text-white"></h3>
+          <p id="confirm-message" class="mt-1.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400"></p>
+        </div>
+      </div>
+      <div class="px-5 py-3.5 bg-slate-50 dark:bg-slate-800/40 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end gap-2.5">
+        <button type="button" onclick="resolveConfirm(false)" class="px-4 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">取消</button>
+        <button type="button" id="confirm-ok" onclick="resolveConfirm(true)" class="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-rose-600 hover:bg-rose-500 shadow-sm shadow-rose-600/20 transition"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= TOAST NOTIFICATION ======================= -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- ======================= APPLICATION LOGIC & DATA ======================= -->
+  <script>
+
+// ============================================================
+    // 1. 数据层：全部来自后端 API（/api/*），本地只缓存登录 token 与主题
+    // ============================================================
+
+    const TRACK_META = [
+      { id: 'java',   name: 'Java 题库',     shortName: 'Java',   totalCount: 0,
+        badgeClass: 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20',
+        dotClass: 'bg-orange-500' },
+      { id: 'python', name: 'Python 题库',   shortName: 'Python', totalCount: 0,
+        badgeClass: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20',
+        dotClass: 'bg-sky-500' },
+      { id: 'llm',    name: '大模型应用 题库', shortName: '大模型应用', totalCount: 0,
+        badgeClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20',
+        dotClass: 'bg-purple-500' }
+    ];
+
+    // 分类描述（后端不返回 desc，按 lang/slug 补文案）
+    const CATEGORY_DESC = {
+      'java/basics': '泛型、反射、异常体系、String 与基础语法核心考点',
+      'java/oop': '封装继承多态的对象模型、SOLID 原则、设计模式选型与领域建模',
+      'java/collections': 'HashMap 底层扩容、ConcurrentHashMap、ArrayList 与树化机制',
+      'java/concurrency': 'JMM 内存模型、volatile、synchronized 锁升级、AQS 与线程池',
+      'java/jvm': '内存区域划分、类加载双亲委派、垃圾回收算法与 G1/ZGC 调优',
+      'java/spring': 'IoC 容器启动、Bean 生命周期、三级缓存循环依赖、AOP 与事务传播',
+      'java/mysql': 'InnoDB 索引 B+ 树、MVCC 多版本并发、事务隔离级别与慢查询优化',
+      'java/redis': '五大数据结构底层、持久化 RDB/AOF、缓存穿透雪崩与分布式锁',
+      'java/distributed': 'CAP 与 BASE、分布式事务 TCC/Saga、分布式锁、消息队列与幂等、服务治理',
+      'python/basics': '动态类型机制、深浅拷贝、装饰器闭包、迭代器与生成器原理',
+      'python/datastruct': 'dict 哈希表紧凑布局、list 动态扩容、set 集合与内存管理机制',
+      'python/concurrency': '全局解释器锁 GIL、多进程 multiprocessing、asyncio 事件循环与协程',
+      'python/oop': '魔术方法、MRO C3 超类线性化、元类 metaclass 与属性描述符',
+      'python/stdlib': '虚拟环境管理、上下文管理器 with、日志体系、类型注解与单元测试',
+      'python/web': 'FastAPI 异步依赖注入、Django ORM 中间件、WSGI 与 ASGI 协议对比',
+      'llm/basics': 'Transformer 自注意力、Token 计费、Temperature/Top-p 采样与流式输出',
+      'llm/prompting': 'Few-shot、CoT 思维链、结构化 JSON 输出约束与抗提示词注入',
+      'llm/rag': '文档切分策略、Embedding 向量检索、混合检索 BM25 + Rerank 重排优化',
+      'llm/tools': 'Function Calling 原理、ReAct 推理循环、Plan-and-Solve 与异常自愈',
+      'llm/serving': 'KV Cache 显存优化、Prefix Caching、量化部署 vLLM 与吞吐延迟权衡',
+      'llm/eval': 'RAGAS 评估指标、LLM-as-a-Judge、幻觉检测与护栏 Guardrails',
+      'llm/mcp': 'Model Context Protocol 架构、Host/Client/Server 通信、Resources 与 Tools',
+      'llm/skills': '动态上下文组装、渐进式技能挂载、长窗口压缩与 Token 预算分配',
+      'llm/multiagent': 'Supervisor 路由模式、Handoffs 交接协议、层级协作与死循环防护',
+      'llm/memory': '短期会话窗口、长期向量记忆、实体知识图谱提取与 Checkpointer',
+      'llm/langchain': 'LCEL 声明式管道、Runnable 协议、OutputParser 与回调链路追踪',
+      'llm/langgraph': 'StateGraph 状态机建模、条件边路由、Human-in-the-loop 断点审批',
+      'llm/deepagent': 'DeepAgent 规划-执行-反思循环、子代理委派与深度搜索策略'
+    };
+
+    // 运行时数据：由 loadCategories / loadAllQuestions 填充
+    let TRACK_GROUPS = TRACK_META.map(g => ({ ...g, categories: [] }));
+    let QUESTIONS = [];        // 全量题目（427 条，含 last_status / favorite / in_wrong_book）
+    let DETAIL_CACHE = {};     // id -> 详情（含 answer_html）
+    let SERVER_STATS = null;   // /api/stats（仅登录后）
+    let CATEGORY_NAMES = {};
+    let API_TOTAL = 0;
+    let BOOTED = false;
+
+    // ---------- HTTP ----------
+    const API = {
+      token() {
+        try { return state.token || ''; } catch (e) { return ''; }
+      },
+      async req(path, opts) {
+        opts = opts || {};
+        const headers = { 'Content-Type': 'application/json' };
+        const tk = API.token();
+        if (tk) headers['Authorization'] = 'Bearer ' + tk;
+        let res;
+        try {
+          res = await fetch('/api' + path, {
+            method: opts.method || 'GET',
+            headers,
+            body: opts.body ? JSON.stringify(opts.body) : undefined
+          });
+        } catch (e) {
+          const err = new Error('网络异常，请稍后重试');
+          err.status = 0;
+          throw err;
+        }
+        let data = null;
+        try { data = await res.json(); } catch (e) { data = null; }
+        if (!res.ok) {
+          if (res.status === 401) API.clearAuth();
+          const msg = (data && (data.detail || data.error)) || ('请求失败 ' + res.status);
+          const err = new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
+          err.status = res.status;
+          throw err;
+        }
+        return data;
+      },
+      clearAuth() {
+        state.token = '';
+        state.user = null;
+        try { localStorage.removeItem('mianshi_token'); } catch (e) {}
+      }
+    };
+
+    // 后端难度 1/2/3 ↔ 前端文案
+    const DIFF_LABEL = { 1: '简单', 2: '中等', 3: '困难' };
+    const DIFF_CODE = { '简单': 1, '中等': 2, '困难': 3 };
+    // 后端 status：1 掌握 / 2 模糊 / 3 不会
+    const STATUS_LABEL = { 1: 'mastered', 2: 'fuzzy', 3: 'unknown' };
+    const STATUS_CODE = { mastered: 1, fuzzy: 2, unknown: 3 };
+
+    function decorateQuestion(q) {
+      const meta = TRACK_META.find(g => g.id === q.lang);
+      return {
+        id: q.id,
+        track: q.lang,
+        trackName: meta ? meta.name : q.lang,
+        categoryId: q.lang + '/' + q.category,
+        categoryName: CATEGORY_NAMES[q.lang + '/' + q.category] || q.category,
+        title: q.title,
+        difficulty: DIFF_LABEL[q.difficulty] || '中等',
+        difficultyCode: q.difficulty,
+        tags: q.tags || [],
+        favorite: !!q.favorite,
+        lastStatus: q.last_status ? STATUS_LABEL[q.last_status] : null,
+        inWrongBook: !!q.in_wrong_book
+      };
+    }
+
+    function findQuestion(id) {
+      return QUESTIONS.find(q => q.id === id) || null;
+    }
+
+    async function loadCategories() {
+      const data = await API.req('/categories');
+      const cats = (data && data.categories) || [];
+      CATEGORY_NAMES = {};
+      TRACK_GROUPS = TRACK_META.map(g => ({ ...g, categories: [], totalCount: 0 }));
+      cats.forEach(c => {
+        const g = TRACK_GROUPS.find(x => x.id === c.lang);
+        if (!g) return;
+        CATEGORY_NAMES[c.lang + '/' + c.slug] = c.name;
+        g.categories.push({
+          id: c.lang + '/' + c.slug,
+          slug: c.slug,
+          name: c.name,
+          count: c.count,
+          desc: CATEGORY_DESC[c.lang + '/' + c.slug] || '',
+          trackId: c.lang
+        });
+        g.totalCount += c.count;
+      });
+      API_TOTAL = TRACK_GROUPS.reduce((s, g) => s + g.totalCount, 0);
+      updateStaticCounts();
+    }
+
+    // 用真实题数替换页面上写死的 414 / 143 / 109 / 162
+    function updateStaticCounts() {
+      const byId = {};
+      TRACK_GROUPS.forEach(g => { byId[g.id] = g.totalCount; });
+      document.querySelectorAll('[data-count-total]').forEach(el => { el.textContent = API_TOTAL; });
+      Object.keys(byId).forEach(k => {
+        document.querySelectorAll('[data-count-track="' + k + '"]').forEach(el => { el.textContent = byId[k]; });
+      });
+      const sub = document.getElementById('brand-subtitle');
+      if (sub) sub.textContent = 'Java · Python · 大模型应用 (' + API_TOTAL + ' 题)';
+    }
+
+    // 拉全量题目：后端 page_size 上限 200，按页循环
+    async function loadAllQuestions() {
+      const collected = [];
+      let page = 1;
+      let total = Infinity;
+      while (collected.length < total && page <= 20) {
+        const data = await API.req('/questions?page=' + page + '&page_size=200');
+        total = data.total || 0;
+        const items = data.items || [];
+        if (!items.length) break;
+        collected.push.apply(collected, items);
+        page += 1;
+      }
+      API_TOTAL = total === Infinity ? collected.length : total;
+      QUESTIONS = collected.map(decorateQuestion);
+      reconcileProgress();
+      updateStaticCounts();
+      return QUESTIONS;
+    }
+
+    async function loadQuestionDetail(id, force) {
+      if (!force && DETAIL_CACHE[id]) return DETAIL_CACHE[id];
+      const d = await API.req('/questions/' + id);
+      DETAIL_CACHE[id] = d;
+      return d;
+    }
+
+    async function loadStats() {
+      if (!state.token) { SERVER_STATS = null; return null; }
+      try {
+        SERVER_STATS = await API.req('/stats');
+        return SERVER_STATS;
+      } catch (e) {
+        SERVER_STATS = null;
+        return null;
+      }
+    }
+
+    async function refreshMe() {
+      if (!state.token) return null;
+      try {
+        const d = await API.req('/auth/me');
+        state.user = d.user || null;
+        return state.user;
+      } catch (e) {
+        state.user = null;
+        return null;
+      }
+    }
+
+    // 把后端 answer_html 拆成 核心答案 / 深入解析 / 常见追问 / 代码示例 四段
+    function splitAnswerHtml(html) {
+      const out = { core: '', analysis: '', followups: '', code: '' };
+      if (!html) return out;
+      const doc = new DOMParser().parseFromString('<div id="__root">' + html + '</div>', 'text/html');
+      const root = doc.getElementById('__root');
+      if (!root) { out.core = html; return out; }
+      let bucket = 'core';
+      const map = { '核心答案': 'core', '深入解析': 'analysis', '常见追问': 'followups', '代码示例': 'code' };
+      Array.from(root.childNodes).forEach(node => {
+        if (node.nodeType === 1 && node.tagName === 'H2') {
+          const key = (node.textContent || '').trim();
+          if (map[key]) bucket = map[key];
+          return;
+        }
+        if (node.nodeType === 1) {
+          out[bucket] += node.outerHTML;
+        } else if (node.nodeType === 3 && (node.textContent || '').trim()) {
+          out[bucket] += escapeHtml(node.textContent);
+        }
+      });
+      return out;
+    }
+
+    function stripHtml(html) {
+      if (!html) return '';
+      const d = document.createElement('div');
+      d.innerHTML = html;
+      return (d.textContent || '').replace(/\s+/g, ' ').trim();
+    }
+
+    function htmlToCodeText(html) {
+      const d = document.createElement('div');
+      d.innerHTML = html || '';
+      const pre = d.querySelector('pre');
+      return (pre ? pre.textContent : d.textContent) || '';
+    }
+
+// 3. Reactive Application State（本地只持久化主题 / 显示偏好 / token；进度以服务端为准）
+    const state = {
+      token: '',
+      user: null,          // { id, username, display_name, role }
+      themeMode: 'system', // 'light' | 'dark' | 'system'
+      homeTrackFilter: 'all', // 'all' | 'java' | 'python' | 'llm'
+      listTrackFilter: 'all',
+      listCategoryFilter: 'all',
+      listDifficultyFilter: 'all', // 'all' | '简单' | '中等' | '困难'
+      listMasteryFilter: 'all',    // 'all' | 'unrated' | 'mastered' | 'fuzzy' | 'unknown'
+      searchQuery: '',
+      expandedTracks: { java: true, python: true, llm: true },
+      sidebarTab: 'categories',   // 'categories' | 'questions'
+      sidebarQuestionScope: 'category',   // 侧栏只列当前小节
+      sidebarScopeMenuOpen: false,
+      sidebarScopePopoverTrack: 'java',
+      sidebarStatusFilter: 'all',
+      sidebarSearch: '',
+      currentQuestionId: 1,
+      lastQuestionId: null,   // 上次学习的题（本地持久化，首页「继续学习」用）
+      answerExpanded: false,
+      codeExpanded: false,
+      alwaysExpandAnswer: false,
+      autoNextOnRate: true,
+      masteryMap: {},   // id -> 'mastered' | 'fuzzy' | 'unknown'（由服务端 last_status 还原）
+      favorites: [],    // 收藏 id 数组（服务端）
+      navList: [],      // 当前列表上下文（详情页上一题/下一题用）
+      loading: false,
+      listMode: 'all'   // 'all' | 'favorites' | 'wrongbook'
+    };
+
+    const LS_KEY = 'mian' + 'shi_ui_prefs';
+    const TOKEN_KEY = 'mian' + 'shi_token';
+
+    function loadPersistedState() {
+      try {
+        const tk = localStorage.getItem(TOKEN_KEY);
+        if (tk) state.token = tk;
+        const saved = localStorage.getItem(LS_KEY);
+        if (saved) {
+          const p = JSON.parse(saved);
+          if (p.themeMode) state.themeMode = p.themeMode;
+          if (typeof p.alwaysExpandAnswer === 'boolean') state.alwaysExpandAnswer = p.alwaysExpandAnswer;
+          if (typeof p.autoNextOnRate === 'boolean') state.autoNextOnRate = p.autoNextOnRate;
+          if (p.expandedTracks) state.expandedTracks = p.expandedTracks;
+          if (Number.isFinite(p.lastQuestionId)) state.lastQuestionId = p.lastQuestionId;
+        }
+        // 跨子域：cookie 优先于本机旧值
+        if (window.MxTheme) state.themeMode = window.MxTheme.get();
+      } catch (e) {
+        // localStorage 不可用时静默降级
+      }
+    }
+
+    function savePersistedState() {
+      try {
+        localStorage.setItem(LS_KEY, JSON.stringify({
+          themeMode: state.themeMode,
+          alwaysExpandAnswer: state.alwaysExpandAnswer,
+          autoNextOnRate: state.autoNextOnRate,
+          expandedTracks: state.expandedTracks,
+          lastQuestionId: state.lastQuestionId
+        }));
+      } catch (e) {}
+    }
+
+    function saveToken(tk) {
+      state.token = tk || '';
+      try {
+        if (tk) localStorage.setItem(TOKEN_KEY, tk);
+        else localStorage.removeItem(TOKEN_KEY);
+      } catch (e) {}
+    }
+
+    // 4. Theme Management (Light / Dark / System)
+    function applyTheme() {
+      const root = document.documentElement;
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = state.themeMode === 'dark' || (state.themeMode === 'system' && prefersDark);
+      if (isDark) {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+      // Update active button style
+      ['light', 'dark', 'system'].forEach(mode => {
+        const btn = document.getElementById('theme-btn-' + mode);
+        if (!btn) return;
+        if (state.themeMode === mode) {
+          btn.className = 'p-1.5 rounded-lg bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-400 shadow-xs transition';
+        } else {
+          btn.className = 'p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition';
+        }
+      });
+    }
+
+    function setThemeMode(mode) {
+      state.themeMode = mode;
+      if (window.MxTheme) window.MxTheme.set(mode);
+      savePersistedState();
+      applyTheme();
+      const labels = { light: '已切换为浅色模式', dark: '已切换为深色模式', system: '已切换为跟随系统主题' };
+      showToast(labels[mode] || '主题已更新');
+    }
+
+    // 4.5 轻量过渡动画（Web Animations API，无第三方依赖，尊重系统「减少动态效果」）
+    const ANIM = {
+      reduce: !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches),
+      dir: 0, // 1 = 下一题，-1 = 上一题；由 goDetailSibling 预置
+      ease: 'cubic-bezier(0.16, 1, 0.3, 1)'
+    };
+    let LAST_ROUTE = null;
+
+    function animOK() {
+      if (ANIM.reduce) return false;
+      // 系统里中途切换「减少动态效果」也立刻生效
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+      return document.visibilityState !== 'hidden'
+        && typeof Element !== 'undefined' && !!Element.prototype.animate;
+    }
+
+    // 统一的内容替换入口
+    //   route   换页：旧视图快照淡出 + 新内容位移淡入
+    //   soft    同页刷新（切筛选/收藏）：不整页闪，只让列表行错峰浮现
+    //   instant 直接替换（自评、加载更多等局部刷新）
+    function swapView(container, html, opts) {
+      if (!container) return;
+      opts = opts || {};
+      const kind = opts.kind || 'route';
+      container.querySelectorAll('.view-ghost').forEach(node => node.remove());
+      if (kind === 'instant' || !animOK()) {
+        container.innerHTML = html;
+        return;
+      }
+      const old = container.firstElementChild;
+      let ghost = null;
+      // loading / error 占位不参与淡出，避免出现「转圈淡出」的怪画面
+      if (kind === 'route' && old && !old.hasAttribute('data-loading')) {
+        ghost = old.cloneNode(true);
+        ghost.removeAttribute('id');
+        ghost.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+        ghost.classList.add('view-ghost');
+        ghost.setAttribute('aria-hidden', 'true');
+      }
+      container.innerHTML = html;
+      const fresh = container.firstElementChild;
+      if (ghost) {
+        container.appendChild(ghost);
+        const fade = ghost.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 170, easing: 'ease-out', fill: 'forwards' });
+        const cleanup = () => { if (ghost.parentNode) ghost.parentNode.removeChild(ghost); };
+        fade.addEventListener('finish', cleanup);
+        setTimeout(cleanup, 500);
+      }
+      if (fresh) {
+        const dir = opts.dir || 0;
+        const from = dir
+          ? { opacity: 0, transform: 'translate3d(' + (dir * 28) + 'px, 0, 0)' }
+          : { opacity: 0, transform: 'translate3d(0, 8px, 0)' };
+        fresh.animate([from, { opacity: 1, transform: 'translate3d(0, 0, 0)' }],
+          { duration: 210, easing: ANIM.ease });
+      }
+      if (!ghost) animateRows(container);
+    }
+
+    // 列表行逐条浮现：只动前 16 行，长列表也不掉帧
+    function animateRows(root) {
+      if (!root) return;
+      const rows = root.querySelectorAll('[data-row-anim]');
+      const limit = Math.min(rows.length, 16);
+      for (let i = 0; i < limit; i++) {
+        rows[i].animate(
+          [{ opacity: 0, transform: 'translate3d(0, 6px, 0)' }, { opacity: 1, transform: 'translate3d(0, 0, 0)' }],
+          { duration: 170, delay: i * 12, easing: 'ease-out', fill: 'backwards' }
+        );
+      }
+    }
+
+    // 详情页「上一题 / 下一题」：给换页动画一个左右方向
+    function goDetailSibling(id, dir) {
+      ANIM.dir = dir || 0;
+      navigateTo('/q/' + id);
+    }
+
+    // 5. Toast Helper (No browser alert/confirm)
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      const colorClass = type === 'success'
+        ? 'border-emerald-500/30 bg-emerald-950/90 text-emerald-100'
+        : type === 'warning'
+        ? 'border-amber-500/30 bg-amber-950/90 text-amber-100'
+        : 'border-slate-700 bg-slate-900/95 text-white';
+      toast.className = `px-4 py-2.5 rounded-xl border ${colorClass} text-xs font-medium shadow-lg flex items-center gap-2`;
+      toast.innerHTML = `<span class="w-2 h-2 rounded-full bg-brand-400"></span><span>${escapeHtml(message)}</span>`;
+      container.appendChild(toast);
+      if (animOK()) {
+        toast.animate(
+          [{ opacity: 0, transform: 'translate3d(0, 10px, 0)' }, { opacity: 1, transform: 'translate3d(0, 0, 0)' }],
+          { duration: 200, easing: ANIM.ease }
+        );
+      }
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.2s ease';
+        setTimeout(() => toast.remove(), 220);
+      }, 2400);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+// 6. Global Counts & Sidebar Rendering（计数来自服务端）
+    function computeStats() {
+      // 以 QUESTIONS（服务端列表）为唯一数据源，避免两份状态不同步
+      let mastered = 0, fuzzy = 0, unknown = 0, favs = 0;
+      QUESTIONS.forEach(q => {
+        if (q.lastStatus === 'mastered') mastered++;
+        else if (q.lastStatus === 'fuzzy') fuzzy++;
+        else if (q.lastStatus === 'unknown') unknown++;
+        if (q.favorite) favs++;
+      });
+      return {
+        total: API_TOTAL || QUESTIONS.length,
+        mastered,
+        fuzzy,
+        unknown,
+        done: mastered + fuzzy + unknown,
+        wrongTotal: fuzzy + unknown,
+        favTotal: favs,
+        signedIn: !!state.user
+      };
+    }
+
+    // 由 QUESTIONS 回填 masteryMap / favorites（侧栏筛选与徽标使用）
+    function reconcileProgress() {
+      const map = {};
+      const favs = [];
+      QUESTIONS.forEach(q => {
+        if (q.lastStatus) map[q.id] = q.lastStatus;
+        if (q.favorite) favs.push(q.id);
+      });
+      state.masteryMap = map;
+      state.favorites = favs;
+    }
+
+    function updateHeaderAndSidebarBadges() {
+      const stats = computeStats();
+      const elMastered = document.getElementById('header-mastered-count');
+      const elFuzzy = document.getElementById('header-fuzzy-count');
+      const elUnknown = document.getElementById('header-unknown-count');
+      const elFav = document.getElementById('sidebar-fav-count');
+      const elWrong = document.getElementById('sidebar-wrong-count');
+      const elTotal = document.getElementById('nav-all-count');
+
+      if (elMastered) elMastered.textContent = stats.mastered;
+      if (elFuzzy) elFuzzy.textContent = stats.fuzzy;
+      if (elUnknown) elUnknown.textContent = stats.unknown;
+      if (elFav) elFav.textContent = stats.favTotal;
+      if (elWrong) elWrong.textContent = stats.wrongTotal;
+      if (elTotal) elTotal.textContent = API_TOTAL || '';
+
+      const authLabel = document.getElementById('auth-btn-label');
+      const syncDot = document.getElementById('sync-status-dot');
+      const syncText = document.getElementById('sync-status-text');
+      const resetBtn = document.getElementById('btn-reset-progress');
+      if (state.user) {
+        if (authLabel) authLabel.textContent = (state.user.display_name || state.user.username);
+        if (syncDot) syncDot.className = 'w-2 h-2 rounded-full bg-brand-500 animate-pulse';
+        if (syncText) syncText.textContent = '云端同步已开启';
+        if (resetBtn) resetBtn.classList.add('hidden');
+      } else {
+        if (authLabel) authLabel.textContent = '登录 / 注册';
+        if (syncDot) syncDot.className = 'w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600';
+        if (syncText) syncText.textContent = '未登录 · 进度不保存';
+        if (resetBtn) resetBtn.classList.add('hidden');
+      }
+    }
+
+    function switchSidebarTab(tabName) {
+      state.sidebarTab = tabName;
+      updateSidebarModeUI();
+    }
+
+    function updateSidebarModeUI() {
+      const tabQ = document.getElementById('sidebar-tab-questions');
+      const tabC = document.getElementById('sidebar-tab-categories');
+      const listEl = document.getElementById('sidebar-question-list');
+      const catEl = document.getElementById('sidebar-categories');
+
+      const isQuestionsMode = state.sidebarTab === 'questions';
+
+      if (tabQ && tabC) {
+        if (isQuestionsMode) {
+          tabQ.className = 'py-1.5 px-2 rounded-lg flex items-center justify-center gap-1.5 bg-white dark:bg-slate-900 text-brand-600 dark:text-brand-400 shadow-2xs transition';
+          tabC.className = 'py-1.5 px-2 rounded-lg flex items-center justify-center gap-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition';
+        } else {
+          tabC.className = 'py-1.5 px-2 rounded-lg flex items-center justify-center gap-1.5 bg-white dark:bg-slate-900 text-brand-600 dark:text-brand-400 shadow-2xs transition';
+          tabQ.className = 'py-1.5 px-2 rounded-lg flex items-center justify-center gap-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition';
+        }
+      }
+
+      if (listEl && catEl) {
+        if (isQuestionsMode) {
+          listEl.classList.remove('hidden');
+          listEl.classList.add('flex');
+          catEl.classList.add('hidden');
+          renderSidebarQuestionList();
+        } else {
+          listEl.classList.add('hidden');
+          listEl.classList.remove('flex');
+          catEl.classList.remove('hidden');
+        }
+      }
+    }
+
+    function getScopeDisplayLabel(currentQ, currentTrackObj) {
+      const sc = state.sidebarQuestionScope;
+      if (sc === 'category') return `当前章节：${currentQ ? currentQ.categoryName : ''}`;
+      if (sc === 'track') return `当前方向：${currentTrackObj ? currentTrackObj.name : ''}`;
+      if (sc === 'all') return `全部题目 (${QUESTIONS.length} 题)`;
+      if (sc === 'wrongbook') return '错题本 (模糊 / 不会)';
+      if (sc === 'favorites') return '我的收藏夹';
+      if (sc.startsWith('cat:')) {
+        const catId = sc.replace('cat:', '');
+        for (const g of TRACK_GROUPS) {
+          const found = g.categories.find(c => c.id === catId);
+          if (found) return `${g.shortName} · ${found.name}`;
+        }
+      }
+      return '全部题目';
+    }
+
+    function getScopeBadgeDotClass(currentTrackObj) {
+      const sc = state.sidebarQuestionScope;
+      if (sc === 'wrongbook') return 'bg-rose-500';
+      if (sc === 'favorites') return 'bg-amber-500';
+      if (sc === 'all') return 'bg-indigo-500';
+      if (sc.startsWith('cat:')) {
+        const catId = sc.replace('cat:', '');
+        const foundG = TRACK_GROUPS.find(g => g.categories.some(c => c.id === catId));
+        if (foundG) return foundG.dotClass;
+      }
+      return currentTrackObj ? currentTrackObj.dotClass : 'bg-brand-500';
+    }
+
+    function toggleSidebarScopeMenu(e) {
+      if (e) e.stopPropagation();
+      state.sidebarScopeMenuOpen = !state.sidebarScopeMenuOpen;
+      if (state.sidebarScopeMenuOpen) {
+        const currentQ = QUESTIONS.find(item => item.id === state.currentQuestionId) || QUESTIONS[0];
+        if (state.sidebarQuestionScope.startsWith('cat:')) {
+          const catId = state.sidebarQuestionScope.replace('cat:', '');
+          const foundG = TRACK_GROUPS.find(g => g.categories.some(c => c.id === catId));
+          if (foundG) state.sidebarScopePopoverTrack = foundG.id;
+        } else {
+          state.sidebarScopePopoverTrack = (currentQ && currentQ.track) || 'java';
+        }
+      }
+      renderSidebarQuestionList();
+    }
+
+    function switchScopePopoverTrack(trackId, e) {
+      if (e) e.stopPropagation();
+      state.sidebarScopePopoverTrack = trackId;
+      renderSidebarQuestionList();
+    }
+
+    function setSidebarQuestionScope(scopeVal) {
+      state.sidebarQuestionScope = scopeVal;
+      state.sidebarScopeMenuOpen = false;
+      if (scopeVal.startsWith('cat:')) {
+        const targetCat = scopeVal.replace('cat:', '');
+        const group = TRACK_GROUPS.find(g => g.categories.some(c => c.id === targetCat));
+        const firstInCat = QUESTIONS.find(q => q.categoryId === targetCat && (!group || q.track === group.id));
+        if (firstInCat && routePath().startsWith('/q/')) {
+          navigateTo(`/q/${firstInCat.id}`);
+          return;
+        }
+      }
+      renderSidebarQuestionList();
+    }
+
+    function setSidebarStatusFilter(statusVal) {
+      state.sidebarStatusFilter = statusVal;
+      renderSidebarQuestionList();
+    }
+
+    function handleSidebarSearchInput(val) {
+      state.sidebarSearch = val;
+      renderSidebarQuestionList();
+    }
+
+    // 侧栏列表内容签名：只有范围/筛选/题目状态变化才重建 DOM。
+    // 点「下一题」只改当前题，走增量高亮即可，避免整列从第一题重排 + 长距离滚动。
+    let SIDEBAR_LIST_SIG = null;
+
+    function sidebarListSignature(visible) {
+      const parts = [state.sidebarQuestionScope, state.sidebarStatusFilter, state.sidebarSearch.trim(), visible.length];
+      const detail = visible.map(q => q.id + (q.favorite ? 'f' : '') + (state.masteryMap[q.id] || '-')).join('.');
+      return parts.join('|') + '|' + detail;
+    }
+
+    function renderSidebarQuestionList() {
+      const container = document.getElementById('sidebar-question-list');
+      if (!container) return;
+
+      const currentQ = QUESTIONS.find(item => item.id === state.currentQuestionId) || QUESTIONS[0] || null;
+      const currentTrackObj = currentQ ? (TRACK_GROUPS.find(g => g.id === currentQ.track) || TRACK_GROUPS[0]) : TRACK_GROUPS[0];
+
+      // 按当前题单范围筛选
+      const scopedQuestions = QUESTIONS.filter(q => {
+        const sc = state.sidebarQuestionScope;
+        if (sc === 'category') return currentQ ? q.categoryId === currentQ.categoryId && q.track === currentQ.track : true;
+        if (sc === 'track') return currentQ ? q.track === currentQ.track : true;
+        if (sc === 'wrongbook') {
+          const m = state.masteryMap[q.id];
+          return m === 'fuzzy' || m === 'unknown';
+        }
+        if (sc === 'favorites') return state.favorites.includes(q.id);
+        if (sc.startsWith('cat:')) {
+          const targetCat = sc.replace('cat:', '');
+          return q.categoryId === targetCat;
+        }
+        return true; // 'all'
+      });
+
+      const totalScoped = scopedQuestions.length || 1;
+      const masteredScoped = scopedQuestions.filter(q => state.masteryMap[q.id] === 'mastered').length;
+      const progressPct = Math.round((masteredScoped / totalScoped) * 100);
+
+      const visibleQuestions = scopedQuestions.filter(q => {
+        const m = state.masteryMap[q.id] || 'unrated';
+        if (state.sidebarStatusFilter === 'mastered' && m !== 'mastered') return false;
+        if (state.sidebarStatusFilter === 'unmastered' && m === 'mastered') return false;
+        if (state.sidebarSearch.trim() !== '') {
+          const kw = state.sidebarSearch.trim().toLowerCase();
+          const matchTitle = q.title.toLowerCase().includes(kw);
+          const matchTag = q.tags.some(t => String(t).toLowerCase().includes(kw));
+          const matchCat = q.categoryName.toLowerCase().includes(kw);
+          if (!matchTitle && !matchTag && !matchCat) return false;
+        }
+        return true;
+      });
+
+      const sig = sidebarListSignature(visibleQuestions);
+      const hasList = !!container.querySelector('#sidebar-question-scroll');
+      if (hasList && sig === SIDEBAR_LIST_SIG) {
+        syncSidebarActiveItem();
+        return;
+      }
+      const prevScrollTop = hasList ? (container.querySelector('#sidebar-question-scroll').scrollTop || 0) : 0;
+
+      const statusIcon = (qId) => {
+        const st = state.masteryMap[qId];
+        if (st === 'mastered') {
+          return `<span class="w-4 h-4 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-[10px] font-bold shrink-0" title="已掌握">✓</span>`;
+        }
+        if (st === 'fuzzy') {
+          return `<span class="w-4 h-4 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 flex items-center justify-center text-[10px] font-bold shrink-0" title="有点模糊">!</span>`;
+        }
+        if (st === 'unknown') {
+          return `<span class="w-4 h-4 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 flex items-center justify-center text-[10px] font-bold shrink-0" title="还不会">✕</span>`;
+        }
+        return `<span class="w-4 h-4 rounded-full border border-slate-300 dark:border-slate-700 text-slate-400 flex items-center justify-center text-[9px] font-mono shrink-0" title="未自评">○</span>`;
+      };
+
+      const diffPill = (diff) => {
+        if (diff === '简单') return 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10';
+        if (diff === '中等') return 'text-amber-600 dark:text-amber-400 bg-amber-500/10';
+        return 'text-rose-600 dark:text-rose-400 bg-rose-500/10';
+      };
+
+      const countOf = (pred) => QUESTIONS.filter(pred).length;
+      const curCatName = currentQ ? currentQ.categoryName : '';
+
+      container.innerHTML = `
+        <div id="sidebar-question-scroll" class="flex-1 overflow-y-auto p-2.5 space-y-1.5">
+          ${visibleQuestions.length === 0 ? `
+            <div class="py-10 px-3 text-center space-y-2">
+              <div class="text-xs text-slate-400">本节还没有匹配的题目</div>
+              <button
+                type="button"
+                onclick="setSidebarStatusFilter('all'); handleSidebarSearchInput('');"
+                class="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:underline"
+              >
+                清空侧栏筛选
+              </button>
+            </div>
+          ` : visibleQuestions.map(item => {
+            const isCurrent = item.id === state.currentQuestionId && routePath().startsWith('/q/');
+            const isFav = state.favorites.includes(item.id);
+            return `
+              <button
+                type="button"
+                data-qid="${item.id}"
+                data-sbactive="${isCurrent ? '1' : '0'}"
+                onclick="selectQuestionFromSidebarList(${item.id})"
+                class="w-full text-left p-2.5 rounded-xl border transition-all group ${
+                  isCurrent
+                    ? 'bg-brand-500/10 dark:bg-brand-500/15 border-brand-500/40 shadow-2xs'
+                    : 'bg-white dark:bg-slate-900/40 border-slate-200/60 dark:border-slate-800/70 hover:border-brand-500/30 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                }"
+              >
+                <div class="flex items-start gap-2.5">
+                  <div class="mt-0.5">
+                    ${statusIcon(item.id)}
+                  </div>
+                  <div class="min-w-0 flex-1 space-y-1">
+                    <div class="flex items-center justify-between gap-1.5">
+                      <span data-sb-num class="font-mono text-[11px] font-semibold ${isCurrent ? 'text-brand-600 dark:text-brand-400' : 'text-slate-400'}">
+                        #${item.id} · ${escapeHtml(item.categoryName)}
+                      </span>
+                      <div class="flex items-center gap-1 shrink-0">
+                        <span data-sb-fav="${item.id}" class="${isFav ? '' : 'hidden '}text-amber-500 text-[11px]" title="已收藏">★</span>
+                        <span class="text-[10px] font-medium px-1.5 py-0.2 rounded ${diffPill(item.difficulty)}">${item.difficulty}</span>
+                      </div>
+                    </div>
+                    <div data-sb-title class="text-xs leading-snug line-clamp-2 ${
+                      isCurrent
+                        ? 'font-bold text-slate-900 dark:text-white'
+                        : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'
+                    }">
+                      ${escapeHtml(item.title)}
+                    </div>
+                  </div>
+                </div>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
+      SIDEBAR_LIST_SIG = sig;
+      const wrap = document.getElementById('sidebar-question-scroll');
+      if (wrap) {
+        // 沿用重建前的滚动位置：不从第一题重新开始，只在当前题不可见时小幅对齐
+        wrap.scrollTop = prevScrollTop;
+        // 首屏布局要好几帧才稳定（字体/样式到位后行高会变），这里多锚点校正
+        scheduleSidebarCenter();
+      }
+    }
+
+    // 只切换「当前题」高亮，不重建整个列表
+    const SB_ITEM_ON = ['bg-brand-500/10', 'dark:bg-brand-500/15', 'border-brand-500/40', 'shadow-2xs'];
+    const SB_ITEM_OFF = ['bg-white', 'dark:bg-slate-900/40', 'border-slate-200/60', 'dark:border-slate-800/70', 'hover:border-brand-500/30', 'hover:bg-slate-50', 'dark:hover:bg-slate-800/60'];
+
+    function setSidebarItemActive(btn, on) {
+      if (!btn) return;
+      btn.classList.remove(...(on ? SB_ITEM_OFF : SB_ITEM_ON));
+      btn.classList.add(...(on ? SB_ITEM_ON : SB_ITEM_OFF));
+      btn.dataset.sbactive = on ? '1' : '0';
+      const num = btn.querySelector('[data-sb-num]');
+      if (num) {
+        num.classList.toggle('text-brand-600', on);
+        num.classList.toggle('dark:text-brand-400', on);
+        num.classList.toggle('text-slate-400', !on);
+      }
+      const title = btn.querySelector('[data-sb-title]');
+      if (title) {
+        ['font-bold', 'text-slate-900', 'dark:text-white'].forEach(c => title.classList.toggle(c, on));
+        ['font-medium', 'text-slate-700', 'text-slate-300'].forEach(c => title.classList.toggle(c, !on));
+      }
+    }
+
+    function syncSidebarActiveItem() {
+      const wrap = document.getElementById('sidebar-question-scroll');
+      if (!wrap) return;
+      const id = state.currentQuestionId;
+      const onDetail = routePath().startsWith('/q/');
+      wrap.querySelectorAll('button[data-qid]').forEach(btn => {
+        const want = onDetail && parseInt(btn.dataset.qid, 10) === id;
+        if ((btn.dataset.sbactive === '1') !== want) setSidebarItemActive(btn, want);
+      });
+      // 默认把当前题放在侧栏正中（上下都留出上下文），而不是贴边
+      centerSidebarOnCurrent(0);
+    }
+
+    // 侧栏列表重渲染会重置滚动位置，这里按当前题重新对齐
+    function restoreSidebarListScroll() {
+      if (routePath().startsWith('/q/') && typeof scrollSidebarToCurrent === 'function') {
+        scrollSidebarToCurrent();
+      }
+    }
+
+    function selectQuestionFromSidebarList(qId) {
+      closeMobileSidebar();
+      navigateTo(`/q/${qId}`);
+    }
+
+    function renderSidebarCategories() {
+      const container = document.getElementById('sidebar-categories');
+      if (!container) return;
+
+      const path = routePath();
+      const navMap = {
+        'nav-home': path === '/',
+        'nav-all': path.startsWith('/list') && state.listCategoryFilter === 'all',
+        'nav-favorites': path.startsWith('/favorites'),
+        'nav-wrongbook': path.startsWith('/wrongbook')
+      };
+      Object.entries(navMap).forEach(([id, active]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (active) {
+          el.className = 'w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold bg-brand-500/10 text-brand-600 dark:text-brand-400 transition-colors';
+        } else {
+          el.className = 'w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors';
+        }
+      });
+
+      let html = '';
+      TRACK_GROUPS.forEach(group => {
+        const isExpanded = state.expandedTracks[group.id] !== false;
+        html += `
+          <div class="space-y-1">
+            <button
+              type="button"
+              onclick="toggleSidebarTrack('${group.id}')"
+              class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
+            >
+              <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full ${group.dotClass}"></span>
+                <span>${group.name}</span>
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="font-mono text-[11px] text-slate-400">${group.totalCount} 题</span>
+                <svg class="w-3.5 h-3.5 transform transition-transform ${isExpanded ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </span>
+            </button>
+            <div class="${isExpanded ? 'space-y-0.5 pl-2' : 'hidden'}">
+              ${group.categories.map(cat => {
+                const isActive = path.startsWith('/list') && state.listCategoryFilter === cat.id;
+                return `
+                  <button
+                    type="button"
+                    onclick="selectCategoryFromSidebar('${group.id}', '${cat.id}')"
+                    class="w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                      isActive
+                        ? 'bg-brand-500/10 text-brand-600 dark:text-brand-400 font-semibold'
+                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-200'
+                    }"
+                  >
+                    <span class="truncate">${cat.name}</span>
+                    <span class="font-mono text-[11px] ${isActive ? 'text-brand-600 dark:text-brand-400' : 'text-slate-400 dark:text-slate-500'}">${cat.count}</span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function toggleSidebarTrack(trackId) {
+      state.expandedTracks[trackId] = !state.expandedTracks[trackId];
+      savePersistedState();
+      renderSidebarCategories();
+    }
+
+    function selectCategoryFromSidebar(trackId, categoryId) {
+      state.listTrackFilter = trackId;
+      state.listCategoryFilter = categoryId;
+      closeMobileSidebar();
+      navigateTo(`/list?cat=${categoryId}`);
+    }
+
+// 7. Mobile Sidebar Controls
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('app-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (!sidebar || !backdrop) return;
+      const isHidden = sidebar.classList.contains('-translate-x-full');
+      if (isHidden) {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        closeMobileSidebar();
+      }
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('app-sidebar');
+      const backdrop = document.getElementById('mobile-sidebar-backdrop');
+      if (sidebar) sidebar.classList.add('-translate-x-full');
+      if (backdrop) backdrop.classList.add('hidden');
+    }
+
+    // 8. Router & View Dispatch（History API 路径路由：/ 首页 · /list · /q/<id> · /favorites · /wrongbook）
+    function routePath() {
+      let p = window.location.pathname || '/';
+      if (p.endsWith('/index.html')) p = p.slice(0, -'/index.html'.length) || '/';
+      if (p.length > 1) p = p.replace(/\/+$/, '') || '/';
+      return p;
+    }
+
+    function currentRouteUrl() {
+      return routePath() + (window.location.search || '');
+    }
+
+    function navigateTo(url) {
+      // 兼容旧调用：传 '#/wrongbook' 也会归一化成 '/wrongbook'
+      let target = String(url == null ? '/' : url).trim();
+      if (target.startsWith('#')) target = target.slice(1);
+      if (!target.startsWith('/')) target = '/' + target;
+      if (currentRouteUrl() === target) {
+        renderCurrentRoute();
+        return;
+      }
+      history.pushState({}, '', target);
+      renderCurrentRoute();
+    }
+
+    // 旧的 '#/wrongbook' 链接自动迁移成干净路径，保证收藏夹里的老地址照样能打开
+    function migrateLegacyHashRoute() {
+      const raw = window.location.hash || '';
+      if (!raw.startsWith('#/')) return;
+      const target = raw.slice(1) || '/';
+      history.replaceState({}, '', target);
+    }
+
+    function setLoadingView(text) {
+      const container = document.getElementById('view-container');
+      if (!container) return;
+      container.innerHTML = `
+        <div data-loading="1" class="py-24 flex flex-col items-center justify-center gap-3 animate-fade-in">
+          <div class="w-7 h-7 rounded-full border-2 border-brand-500/30 border-t-brand-500 animate-spin"></div>
+          <div class="text-xs text-slate-400">${escapeHtml(text || '正在加载题库…')}</div>
+        </div>
+      `;
+    }
+
+    function setErrorView(err) {
+      const container = document.getElementById('view-container');
+      if (!container) return;
+      const msg = (err && err.message) || '加载失败';
+      container.innerHTML = `
+        <div data-loading="1" class="py-24 flex flex-col items-center justify-center gap-3 animate-fade-in">
+          <div class="w-11 h-11 rounded-2xl bg-rose-500/10 text-rose-500 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            </svg>
+          </div>
+          <div class="text-sm font-semibold text-slate-700 dark:text-slate-200">${escapeHtml(msg)}</div>
+          <button type="button" onclick="renderCurrentRoute()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white hover:bg-brand-500 transition">重新加载</button>
+        </div>
+      `;
+    }
+
+    async function boot() {
+      if (BOOTED) return;
+      setLoadingView('正在加载题库…');
+      await loadCategories();
+      await loadAllQuestions();
+      if (state.token) {
+        await refreshMe();
+        await loadStats();
+      }
+      BOOTED = true;
+    }
+
+    async function renderCurrentRoute() {
+      const path = routePath();
+      const params = new URLSearchParams(window.location.search || '');
+
+      // 同页刷新（切筛选、收藏等）只做行级动效；路径真的变了才做整页过渡
+      const routeSearch = window.location.search || '';
+      const prevRoute = LAST_ROUTE;
+      const sameRoute = !!prevRoute && prevRoute.path === path && prevRoute.search === routeSearch;
+      // 同页刷新（切筛选/清筛选等）直接换 DOM：原来的 soft 动画会让整页内容从下方 8px 淡入，
+      // 每次点筛选都像「抖一下」，非常影响手感。
+      const swapKind = sameRoute ? 'instant' : 'route';
+      let navDir = ANIM.dir;
+      ANIM.dir = 0;
+      if (!navDir && !sameRoute && prevRoute && prevRoute.path.startsWith('/q/') && path.startsWith('/q/')) {
+        const prevId = parseInt(prevRoute.path.slice(3), 10);
+        const nextId = parseInt(path.slice(3), 10);
+        if (prevId && nextId && prevId !== nextId) navDir = nextId > prevId ? 1 : -1;
+      }
+      LAST_ROUTE = { path: path, search: routeSearch };
+
+      // 换页先回到顶部，淡出快照才对得上当前可见区域；同页刷新保持滚动位置
+      const mainScroll = document.getElementById('main-scroll-container');
+      if (mainScroll && !sameRoute) {
+        // 「题 → 题」切换时保持顶栏现状：原来收起就继续收起，沉浸刷题不被打断。
+        // 回顶会触发 y<=8 的自动展开逻辑，所以这里用 HEADER_SUPPRESS_REVEAL 抑制一次。
+        const header = document.getElementById('app-header');
+        const keepHeaderHidden = !!(prevRoute && prevRoute.path.startsWith('/q/')
+          && path.startsWith('/q/')
+          && header && header.classList.contains('header-hidden'));
+        if (keepHeaderHidden) HEADER_SUPPRESS_REVEAL = true;
+        mainScroll.scrollTop = 0;
+        if (!keepHeaderHidden) showAppHeader();   // 从列表/首页进入详情时，顶栏正常可见
+      }
+
+      // 错题本只收录「有点模糊 / 还不会」，掌握度筛选不可能命中掌握的题，进来就复位
+      if (path === '/wrongbook' && (state.listMasteryFilter === 'mastered' || state.listMasteryFilter === 'unrated')) {
+        state.listMasteryFilter = 'all';
+      }
+
+      if (params.has('cat')) {
+        const catId = params.get('cat');
+        state.listCategoryFilter = catId;
+        const foundTrack = TRACK_GROUPS.find(g => g.categories.some(c => c.id === catId));
+        if (foundTrack) state.listTrackFilter = foundTrack.id;
+      } else if (path === '/list') {
+        state.listCategoryFilter = 'all';
+      }
+      if (params.has('q')) {
+        state.searchQuery = params.get('q') || '';
+        const input = document.getElementById('global-search-input');
+        if (input && input.value !== state.searchQuery) input.value = state.searchQuery;
+      }
+
+      const container = document.getElementById('view-container');
+      if (!container) return;
+
+      if (!BOOTED) {
+        try {
+          await boot();
+        } catch (e) {
+          setErrorView(e);
+          return;
+        }
+      } else if (state.token && !state.user) {
+        await refreshMe();
+      }
+
+      // 侧栏「本节题目」跟随当前小节；收藏夹 / 错题本跟随各自范围
+      if (path.startsWith('/q/')) state.sidebarQuestionScope = 'category';
+      else if (path === '/favorites') state.sidebarQuestionScope = 'favorites';
+      else if (path === '/wrongbook') state.sidebarQuestionScope = 'wrongbook';
+
+      updateHeaderAndSidebarBadges();
+      renderSidebarCategories();
+
+      try {
+        if (path.startsWith('/q/')) {
+          const qId = parseInt(path.slice(3), 10);
+          if (!qId) { navigateTo('/'); return; }
+          state.currentQuestionId = qId;
+          if (state.lastQuestionId !== qId) {
+            state.lastQuestionId = qId;
+            savePersistedState();
+          }
+          state.answerExpanded = state.alwaysExpandAnswer;
+          state.codeExpanded = false;
+          state.sidebarTab = 'questions';
+          updateSidebarModeUI();
+          const sameDetailOnScreen = !!container.querySelector('[data-detail-id="' + qId + '"]');
+          if (!sameDetailOnScreen) setLoadingView('正在加载题目…');
+          const detail = await loadQuestionDetail(qId);
+          if (!findQuestion(qId)) {
+            // 直接分享的题号可能不在当前列表缓存里，补一次
+            QUESTIONS.push(decorateQuestion({
+              id: detail.id, lang: detail.lang, category: detail.category,
+              title: detail.title, difficulty: detail.difficulty, tags: detail.tags,
+              favorite: detail.favorite, last_status: detail.last_status, in_wrong_book: false
+            }));
+            QUESTIONS.sort((a, b) => a.id - b.id);
+          }
+          swapView(container, renderQuestionDetailView(qId), { kind: swapKind, dir: navDir });
+          if (typeof wrapAnswerTables === 'function') wrapAnswerTables(container);
+          centerSidebarOnCurrent(0);
+          requestAnimationFrame(() => centerSidebarOnCurrent(0));
+        } else if (path === '/list') {
+          if (!sameRoute) {
+            const pg = parseInt(params.get('page'), 10);
+            LIST_PAGE = Number.isFinite(pg) && pg > 0 ? pg : 1;
+          }
+          updateSidebarModeUI();
+          swapView(container, renderQuestionListView('all'), { kind: swapKind });
+        } else if (path === '/favorites') {
+          if (!sameRoute) resetListPage();
+          updateSidebarModeUI();
+          swapView(container, renderQuestionListView('favorites'), { kind: swapKind });
+        } else if (path === '/wrongbook') {
+          if (!sameRoute) resetListPage();
+          updateSidebarModeUI();
+          swapView(container, renderQuestionListView('wrongbook'), { kind: swapKind });
+        } else {
+          state.listCategoryFilter = 'all';
+          state.sidebarTab = 'categories';
+          updateSidebarModeUI();
+          swapView(container, renderHomeView(), { kind: swapKind });
+        }
+      } catch (e) {
+        setErrorView(e);
+      }
+
+    }
+
+// 9. VIEW 1: Home View (简洁版：标题 + 操作 + 进度 + 专题目录)
+    function renderHomeView() {
+      const stats = computeStats();
+      const total = API_TOTAL || QUESTIONS.length;
+      const trackCount = (id) => {
+        const g = TRACK_GROUPS.find(x => x.id === id);
+        return g ? g.totalCount : 0;
+      };
+      const categoryTotal = TRACK_GROUPS.reduce((s, g) => s + g.categories.length, 0);
+      const filteredGroups = state.homeTrackFilter === 'all'
+        ? TRACK_GROUPS
+        : TRACK_GROUPS.filter(g => g.id === state.homeTrackFilter);
+      const tabs = [
+        { id: 'all', label: '全部', count: total },
+        { id: 'java', label: 'Java', count: trackCount('java') },
+        { id: 'python', label: 'Python', count: trackCount('python') },
+        { id: 'llm', label: '大模型应用', count: trackCount('llm') }
+      ];
+      const pct = (n) => total ? (n / total) * 100 : 0;
+      const arrow = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>`;
+
+      return `
+        <div class="max-w-5xl mx-auto space-y-10">
+          <header class="pt-2">
+            <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">面试刷题库</h1>
+            <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+              Java · Python · 大模型应用，共 ${categoryTotal} 个专题、${total} 道题。先自己想，再看解析，最后自评。
+            </p>
+            <div class="mt-5 flex flex-wrap items-center gap-2.5">
+              <button type="button" onclick="startPracticeFromHero()"
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:hover:bg-slate-200 dark:text-slate-900 transition">
+                <span>${heroPrimaryLabel()}</span>${arrow}
+              </button>
+              <button type="button" onclick="pickRandomQuestion()"
+                class="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                随机一题
+              </button>
+              ${state.user ? '' : `
+                <button type="button" onclick="openLoginModal()"
+                  class="ml-1 text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition">
+                  登录后可同步进度与错题本 →
+                </button>`}
+            </div>
+          </header>
+
+          ${state.user ? `
+            <section class="space-y-3">
+              <div class="flex flex-wrap items-baseline justify-between gap-2 text-sm">
+                <div class="flex flex-wrap items-baseline gap-x-5 gap-y-1 text-slate-500 dark:text-slate-400">
+                  <span>已掌握 <b class="font-mono font-semibold text-slate-900 dark:text-white">${stats.mastered}</b> / ${total}</span>
+                  <span class="inline-flex items-center gap-1.5"><i class="w-1.5 h-1.5 rounded-full bg-amber-500"></i>模糊 <b class="font-mono font-medium text-slate-700 dark:text-slate-200">${stats.fuzzy}</b></span>
+                  <span class="inline-flex items-center gap-1.5"><i class="w-1.5 h-1.5 rounded-full bg-rose-500"></i>不会 <b class="font-mono font-medium text-slate-700 dark:text-slate-200">${stats.unknown}</b></span>
+                </div>
+                <button type="button" onclick="navigateTo('/wrongbook')"
+                  class="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition">
+                  错题本 ${stats.wrongTotal} 题 →
+                </button>
+              </div>
+              <div class="h-1 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden flex">
+                <div style="width:${pct(stats.mastered)}%" class="bg-emerald-500"></div>
+                <div style="width:${pct(stats.fuzzy)}%" class="bg-amber-400"></div>
+                <div style="width:${pct(stats.unknown)}%" class="bg-rose-400"></div>
+              </div>
+            </section>
+          ` : ''}
+
+          <div class="flex flex-wrap items-end justify-between gap-3 border-b border-slate-200 dark:border-slate-800">
+            <nav class="flex gap-5 -mb-px overflow-x-auto">
+              ${tabs.map(tab => {
+                const active = state.homeTrackFilter === tab.id;
+                return `
+                  <button type="button" onclick="handleHeroTrackChange('${tab.id}')"
+                    class="pb-2.5 text-sm border-b-2 transition ${active
+                      ? 'border-slate-900 dark:border-white text-slate-900 dark:text-white font-medium'
+                      : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'}">
+                    ${tab.label}<span class="ml-1.5 font-mono text-xs text-slate-400">${tab.count}</span>
+                  </button>`;
+              }).join('')}
+            </nav>
+
+          </div>
+
+          <div class="space-y-10">
+            ${filteredGroups.map(group => `
+              <section>
+                <div class="flex items-baseline justify-between mb-1">
+                  <h2 class="flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-white">
+                    <span class="w-1.5 h-1.5 rounded-full ${group.dotClass}"></span>${group.name}
+                    <span class="font-mono text-xs font-normal text-slate-400">${group.totalCount}</span>
+                  </h2>
+
+                </div>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
+                  ${group.categories.map(cat => {
+                    const done = state.user
+                      ? QUESTIONS.filter(x => x.categoryId === cat.id && state.masteryMap[x.id] === 'mastered').length
+                      : 0;
+                    return `
+                      <li>
+                        <button type="button" onclick="selectCategoryFromSidebar('${group.id}', '${cat.id}')"
+                          class="group w-full text-left flex items-center justify-between gap-4 py-3.5 border-b border-slate-100 dark:border-slate-800/80">
+                          <span class="min-w-0">
+                            <span class="block text-sm font-medium text-slate-800 dark:text-slate-100 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">${escapeHtml(cat.name)}</span>
+                            <span class="block mt-0.5 text-xs text-slate-400 dark:text-slate-500 truncate">${escapeHtml(cat.desc)}</span>
+                          </span>
+                          <span class="shrink-0 font-mono text-xs text-slate-400">
+                            ${state.user ? `<span class="${done ? 'text-emerald-600 dark:text-emerald-400' : ''}">${done}</span>/` : ''}${cat.count}
+                          </span>
+                        </button>
+                      </li>`;
+                  }).join('')}
+                </ul>
+              </section>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function handleHeroTrackChange(trackId) {
+      state.homeTrackFilter = trackId;
+      renderCurrentRoute();
+    }
+
+    // 首页主按钮的去向：有上次学习的题就续上（切了技术方向 tab 时只认该方向的上次进度），
+    // 否则回到当前范围内第一道没掌握的题。
+    function heroTargetQuestion() {
+      const inScope = (q) => q && (state.homeTrackFilter === 'all' || q.track === state.homeTrackFilter);
+      const last = state.lastQuestionId ? findQuestion(state.lastQuestionId) : null;
+      if (inScope(last)) return { q: last, resume: true };
+      const pool = state.homeTrackFilter === 'all'
+        ? QUESTIONS
+        : QUESTIONS.filter(q => q.track === state.homeTrackFilter);
+      if (!pool.length) return null;
+      const firstUnmastered = pool.find(q => state.masteryMap[q.id] !== 'mastered');
+      // 换设备/清过缓存时本地没有上次位置，但只要已有自评进度，仍算「继续学习」
+      const hasProgress = pool.some(q => Object.prototype.hasOwnProperty.call(state.masteryMap, q.id));
+      return { q: firstUnmastered || pool[0], resume: hasProgress };
+    }
+
+    function heroPrimaryLabel() {
+      const t = heroTargetQuestion();
+      return t && t.resume ? '继续学习' : '开始学习';
+    }
+
+    function startPracticeFromHero() {
+      const t = heroTargetQuestion();
+      if (!t || !t.q) {
+        navigateTo('/list');
+        return;
+      }
+      navigateTo(`/q/${t.q.id}`);
+    }
+
+    function pickRandomQuestion() {
+      const pool = state.homeTrackFilter === 'all'
+        ? QUESTIONS
+        : QUESTIONS.filter(q => q.track === state.homeTrackFilter);
+      if (!pool.length) { showToast('题库暂无题目'); return; }
+      const q = pool[Math.floor(Math.random() * pool.length)];
+      showToast(`已随机抽取：${q.categoryName} · #${q.id}`);
+      navigateTo(`/q/${q.id}`);
+    }
+
+    function filterListByTrack(trackId) {
+      state.listTrackFilter = trackId;
+      state.listCategoryFilter = 'all';
+      navigateTo('/list');
+    }
+
+// 10. VIEW 2: Question List View (All / Category / Search / Favorites / Wrongbook)
+    const LIST_PAGE_SIZE = 10;   // 每页题数
+    let LIST_PAGE = 1;           // 当前页码（从 1 起）
+
+    function resetListPage() {
+      LIST_PAGE = 1;
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.has('page')) {
+          url.searchParams.delete('page');
+          history.replaceState({}, '', url.pathname + (url.search || ''));
+        }
+      } catch (e) {}
+    }
+
+    function setListPage(page) {
+      const next = Math.max(1, parseInt(page, 10) || 1);
+      LIST_PAGE = next;
+      try {
+        const url = new URL(window.location.href);
+        if (next > 1) url.searchParams.set('page', next);
+        else url.searchParams.delete('page');
+        history.replaceState({}, '', url.pathname + (url.search || ''));
+      } catch (e) {}
+      const container = document.getElementById('view-container');
+      if (container) swapView(container, renderQuestionListView(state.listMode), { kind: 'instant' });
+      const mainScroll = document.getElementById('main-scroll-container');
+      if (mainScroll) mainScroll.scrollTop = 0;
+    }
+
+    // 页码序列：1 … page-1 page page+1 … total
+    function listPagerNumbers(page, total) {
+      const out = [];
+      const push = (n) => { if (out[out.length - 1] !== n) out.push(n); };
+      for (let n = 1; n <= total; n += 1) {
+        if (n === 1 || n === total || Math.abs(n - page) <= 1) push(n);
+        else if (out[out.length - 1] !== '…') out.push('…');
+      }
+      return out;
+    }
+
+    function renderListFiltered(mode) {
+      const mastery = state.listMasteryFilter;
+      return QUESTIONS.filter(q => {
+        if (mode === 'favorites' && !q.favorite) return false;
+        if (mode === 'wrongbook') {
+          // 错题本基础集合 = 自评为「有点模糊 / 还不会」的题。
+          // 旧实现这里直接 return，把下面的难度 / 掌握度 / 搜索筛选全短路了，所以筛选看着失效。
+          if (q.lastStatus !== 'fuzzy' && q.lastStatus !== 'unknown') return false;
+          if (mastery !== 'all' && q.lastStatus !== mastery) return false;
+        } else if (mode === 'all') {
+          if (state.listTrackFilter !== 'all' && q.track !== state.listTrackFilter) return false;
+          if (state.listCategoryFilter !== 'all' && q.categoryId !== state.listCategoryFilter) return false;
+        }
+        if (state.listDifficultyFilter !== 'all' && q.difficulty !== state.listDifficultyFilter) return false;
+        if (mode !== 'wrongbook' && mastery !== 'all') {
+          const m = q.lastStatus || 'unrated';
+          if (m !== mastery) return false;
+        }
+        const kw = state.searchQuery.trim().toLowerCase();
+        if (kw) {
+          const inTitle = q.title.toLowerCase().includes(kw);
+          const inCat = q.categoryName.toLowerCase().includes(kw);
+          const inTags = q.tags.some(t => String(t).toLowerCase().includes(kw));
+          if (!inTitle && !inCat && !inTags) return false;
+        }
+        return true;
+      });
+    }
+
+    function renderQuestionListView(mode) {
+      state.listMode = mode;
+      let title = '全部面试题目';
+      let subtitle = '支持按技术方向、专题分类、难度等级与自评状态组合筛选';
+
+      if (mode === 'favorites') {
+        title = '我的收藏夹';
+        subtitle = '重点标记的高频面试题与核心架构考点，随时回顾背诵';
+      } else if (mode === 'wrongbook') {
+        title = '错题本（待攻克）';
+        subtitle = '自动收录自评为「有点模糊」或「还不会」的题目，针对性查漏补缺';
+      } else if (state.listCategoryFilter !== 'all') {
+        for (const g of TRACK_GROUPS) {
+          const found = g.categories.find(c => c.id === state.listCategoryFilter);
+          if (found) {
+            title = `${found.name} 专项题库`;
+            subtitle = `${g.name} · 共 ${found.count} 道题 · ${found.desc || ''}`;
+            break;
+          }
+        }
+      } else if (state.listTrackFilter !== 'all') {
+        const g = TRACK_GROUPS.find(x => x.id === state.listTrackFilter);
+        if (g) {
+          title = `${g.name} · 全部专题`;
+          subtitle = `${g.name} 下共 ${g.totalCount} 道题，可继续按专题、难度与掌握度筛选`;
+        }
+      }
+
+      // 收藏 / 错题本依赖服务端用户记录
+      const needLogin = (mode === 'favorites' || mode === 'wrongbook') && !state.user;
+
+      const filtered = needLogin ? [] : renderListFiltered(mode);
+      const totalPages = Math.max(1, Math.ceil(filtered.length / LIST_PAGE_SIZE));
+      const page = Math.min(Math.max(1, LIST_PAGE), totalPages);
+      LIST_PAGE = page;
+      const shown = filtered.slice((page - 1) * LIST_PAGE_SIZE, page * LIST_PAGE_SIZE);
+
+      // 当前生效的「范围」筛选（搜索词 / 分类 / 技术方向），用于在列表头部展示可一键清除的标签
+      let scopeLabel = '';
+      if (state.searchQuery) scopeLabel = '搜索：' + state.searchQuery;
+      else if (state.listCategoryFilter !== 'all') scopeLabel = CATEGORY_NAMES[state.listCategoryFilter] || state.listCategoryFilter;
+      else if (state.listTrackFilter !== 'all') scopeLabel = (TRACK_META.find(g => g.id === state.listTrackFilter) || {}).name || state.listTrackFilter;
+
+      const difficultyBadge = (diff) => {
+        if (diff === '简单') return 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20';
+        if (diff === '中等') return 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20';
+        return 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20';
+      };
+
+      const masteryDot = (q) => {
+        const status = q.lastStatus;
+        if (status === 'mastered') return '<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" title="已掌握"></span>';
+        if (status === 'fuzzy') return '<span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" title="有点模糊"></span>';
+        if (status === 'unknown') return '<span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" title="还不会"></span>';
+        return '<span class="w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-700 inline-block" title="未自评"></span>';
+      };
+
+      return `
+        <div class="space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200/80 dark:border-slate-800">
+            <div>
+              <div class="flex items-center gap-2 text-xs text-slate-400 mb-1">
+                <a href="/" onclick="navigateTo('/'); return false;" class="hover:text-brand-500">首页</a>
+                <span>/</span>
+                <span class="text-slate-600 dark:text-slate-300">${escapeHtml(title)}</span>
+              </div>
+              <h1 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">${escapeHtml(title)}</h1>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">${escapeHtml(subtitle)}</p>
+              ${scopeLabel ? `
+                <div class="mt-2.5 flex flex-wrap items-center gap-1.5 text-xs">
+                  <span class="text-slate-400">当前筛选</span>
+                  <span class="inline-flex items-center gap-1 pl-2.5 pr-1 py-1 rounded-lg font-medium bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20">
+                    <span class="max-w-[16rem] truncate">${escapeHtml(scopeLabel)}</span>
+                    <button
+                      type="button"
+                      onclick="clearScopeFilters()"
+                      class="w-5 h-5 rounded-md inline-flex items-center justify-center text-brand-600/70 hover:text-rose-500 hover:bg-rose-500/10 transition"
+                      title="清除当前筛选"
+                      aria-label="清除当前筛选"
+                    ><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+                  </span>
+                </div>
+              ` : ''}
+            </div>
+
+            <div class="flex items-center gap-2.5 shrink-0">
+              ${filtered.length > 0 ? `
+                <button
+                  type="button"
+                  onclick="navigateTo('/q/${filtered[0].id}')"
+                  class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-brand-600 hover:bg-brand-500 text-white shadow-sm shadow-brand-600/20 transition"
+                >
+                  <span>顺序刷当前列表 (${filtered.length} 题)</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                  </svg>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+
+          ${needLogin ? `
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 py-16 px-6 text-center space-y-4">
+              <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-600 dark:text-brand-400 mx-auto flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+              </div>
+              <div class="space-y-1">
+                <div class="text-sm font-semibold text-slate-800 dark:text-slate-100">${mode === 'favorites' ? '登录后查看收藏夹' : '登录后查看错题本'}</div>
+                <p class="text-xs text-slate-500 dark:text-slate-400">${mode === 'favorites' ? '收藏记录保存在云端，登录 ai.xlingo.fun 账号后即可同步。' : '自评为「有点模糊 / 还不会」的题目会自动进入错题本。'}</p>
+              </div>
+              <button
+                type="button"
+                onclick="openLoginModal()"
+                class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-brand-600 hover:bg-brand-500 text-white transition"
+              >
+                登录并同步
+              </button>
+            </div>
+          ` : `
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800 space-y-2.5">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="text-xs font-medium text-slate-400 mr-1">难度:</span>
+                ${['all', '简单', '中等', '困难'].map(diff => {
+                  const active = state.listDifficultyFilter === diff;
+                  return `
+                    <button
+                      type="button"
+                      onclick="setListDifficultyFilter('${diff}')"
+                      class="px-3 py-1.5 rounded-lg text-xs font-medium transition ${
+                        active
+                          ? 'bg-brand-600 text-white shadow-2xs'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-700'
+                      }"
+                    >
+                      ${diff === 'all' ? '全部难度' : diff}
+                    </button>
+                  `;
+                }).join('')}
+                <button
+                  type="button"
+                  onclick="setListDifficultyFilter('all')"
+                  class="ml-0.5 w-6 h-6 shrink-0 rounded-full inline-flex items-center justify-center text-rose-500 hover:bg-rose-500/10 transition ${state.listDifficultyFilter === 'all' ? 'invisible pointer-events-none' : ''}"
+                  title="清除难度筛选"
+                  aria-label="清除难度筛选"
+                ><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="text-xs font-medium text-slate-400 mr-1">掌握度:</span>
+                ${[
+                  { id: 'all', label: '全部状态', dot: '' },
+                  { id: 'mastered', label: '掌握了', dot: 'bg-emerald-500' },
+                  { id: 'fuzzy', label: '有点模糊', dot: 'bg-amber-500' },
+                  { id: 'unknown', label: '还不会', dot: 'bg-rose-500' },
+                  { id: 'unrated', label: '未自评', dot: 'bg-slate-400' }
+                ].filter(m => state.listMode !== 'wrongbook' || ['all', 'fuzzy', 'unknown'].includes(m.id)).map(m => {
+                  const active = state.listMasteryFilter === m.id;
+                  return `
+                    <button
+                      type="button"
+                      onclick="setListMasteryFilter('${m.id}')"
+                      class="px-2.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 ${
+                        active
+                          ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-2xs'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-700'
+                      }"
+                    >
+                      ${m.dot ? `<span class="w-1.5 h-1.5 rounded-full ${m.dot}"></span>` : ''}
+                      <span>${m.label}</span>
+                    </button>
+                  `;
+                }).join('')}
+                <button
+                  type="button"
+                  onclick="setListMasteryFilter('all')"
+                  class="ml-0.5 w-6 h-6 shrink-0 rounded-full inline-flex items-center justify-center text-rose-500 hover:bg-rose-500/10 transition ${state.listMasteryFilter === 'all' ? 'invisible pointer-events-none' : ''}"
+                  title="清除掌握度筛选"
+                  aria-label="清除掌握度筛选"
+                ><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800/80">
+              ${filtered.length === 0 ? `
+                <div class="py-16 px-4 text-center space-y-3">
+                  <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div class="text-sm font-semibold text-slate-700 dark:text-slate-200">当前筛选条件下暂无匹配题目</div>
+                  <p class="text-xs text-slate-400">可尝试切换难度标签、清空搜索词或返回全部题库</p>
+                  <button
+                    type="button"
+                    onclick="clearAllListFilters()"
+                    class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white hover:bg-brand-500 transition"
+                  >
+                    重置全部筛选条件
+                  </button>
+                </div>
+              ` : shown.map(q => {
+                const isFav = q.favorite;
+                return `
+                  <div
+                    data-row-anim
+                    onclick="navigateTo('/q/${q.id}')"
+                    class="group px-4 sm:px-6 py-4 flex items-center justify-between gap-4 hover:bg-slate-50/90 dark:hover:bg-slate-800/50 cursor-pointer transition-colors"
+                  >
+                    <div class="flex items-start sm:items-center gap-3.5 min-w-0 flex-1">
+                      <div class="pt-1 sm:pt-0 shrink-0">
+                        ${masteryDot(q)}
+                      </div>
+                      <div class="min-w-0 flex-1 space-y-1.5">
+                        <div class="flex items-center gap-2 flex-wrap">
+                          <span class="font-mono text-xs text-slate-400">#${q.id}</span>
+                          <span class="text-xs font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${escapeHtml(q.categoryName)}</span>
+                          <h3 class="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                            ${escapeHtml(q.title)}
+                          </h3>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-1.5">
+                          ${q.tags.map(tag => `
+                            <span class="text-[11px] px-2 py-0.5 rounded-md bg-slate-100/80 dark:bg-slate-800/70 text-slate-500 dark:text-slate-400 font-mono">
+                              ${escapeHtml(tag)}
+                            </span>
+                          `).join('')}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-2.5 shrink-0" onclick="event.stopPropagation()">
+                      <span class="text-xs font-medium px-2.5 py-1 rounded-full border ${difficultyBadge(q.difficulty)}">
+                        ${q.difficulty}
+                      </span>
+                      <button
+                        type="button"
+                        onclick="toggleFavorite(${q.id})"
+                        data-fav-id="${q.id}"
+                        data-fav-style="icon"
+                        class="p-2 rounded-lg transition ${
+                          isFav
+                            ? 'text-amber-500 bg-amber-500/10'
+                            : 'text-slate-300 dark:text-slate-600 hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                        }"
+                        title="${isFav ? '取消收藏' : '加入收藏'}"
+                      >
+                        <svg data-fav-svg class="w-4 h-4" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+
+              ${filtered.length > 0 ? `
+                <div class="px-3 sm:px-4 py-3.5 flex flex-wrap items-center justify-center gap-1.5 border-t border-slate-100 dark:border-slate-800/80">
+                  <button
+                    type="button"
+                    onclick="setListPage(${page - 1})"
+                    ${page <= 1 ? 'disabled' : ''}
+                    class="px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${page <= 1
+                      ? 'border-slate-200/70 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}"
+                  >上一页</button>
+                  ${listPagerNumbers(page, totalPages).map(n => n === '…' ? `
+                    <span class="px-1 text-xs text-slate-400 select-none">…</span>
+                  ` : `
+                    <button
+                      type="button"
+                      onclick="setListPage(${n})"
+                      class="min-w-8 px-2 py-1.5 rounded-lg text-xs font-mono font-semibold transition ${n === page
+                        ? 'bg-brand-600 text-white shadow-2xs'
+                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}"
+                    >${n}</button>
+                  `).join('')}
+                  <button
+                    type="button"
+                    onclick="setListPage(${page + 1})"
+                    ${page >= totalPages ? 'disabled' : ''}
+                    class="px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${page >= totalPages
+                      ? 'border-slate-200/70 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}"
+                  >下一页</button>
+                  <span class="w-full sm:w-auto text-center text-[11px] font-mono text-slate-400 sm:ml-2">第 ${page} / ${totalPages} 页 · 共 ${filtered.length} 题</span>
+                </div>
+              ` : ''}
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    function setListDifficultyFilter(diff) {
+      state.listDifficultyFilter = diff;
+      resetListPage();
+      renderCurrentRoute();
+    }
+
+    function setListMasteryFilter(mastery) {
+      state.listMasteryFilter = mastery;
+      resetListPage();
+      renderCurrentRoute();
+    }
+
+    // 只清掉「范围」类筛选（搜索 / 分类 / 技术方向），难度与掌握度保留
+    function clearScopeFilters() {
+      state.listCategoryFilter = 'all';
+      state.listTrackFilter = 'all';
+      state.searchQuery = '';
+      resetListPage();
+      const input = document.getElementById('global-search-input');
+      if (input) input.value = '';
+      const clearBtn = document.getElementById('btn-clear-search');
+      if (clearBtn) clearBtn.classList.add('hidden');
+      navigateTo(state.listMode === 'favorites' ? '/favorites' : state.listMode === 'wrongbook' ? '/wrongbook' : '/list');
+    }
+
+    function clearAllListFilters() {
+      state.listTrackFilter = 'all';
+      state.listCategoryFilter = 'all';
+      state.listDifficultyFilter = 'all';
+      state.listMasteryFilter = 'all';
+      state.searchQuery = '';
+      resetListPage();
+      const input = document.getElementById('global-search-input');
+      if (input) input.value = '';
+      const clearBtn = document.getElementById('btn-clear-search');
+      if (clearBtn) clearBtn.classList.add('hidden');
+      navigateTo(state.listMode === 'favorites' ? '/favorites' : state.listMode === 'wrongbook' ? '/wrongbook' : '/list');
+    }
+
+// 11. VIEW 3: Question Detail / Practice View (/q/:id)
+    function getDetailParts(qId) {
+      const d = DETAIL_CACHE[qId];
+      if (!d) return { core: '', analysis: '', followups: '', code: '' };
+      return splitAnswerHtml(d.answer_html);
+    }
+
+    function getSiblings(q) {
+      const list = QUESTIONS.filter(x => x.track === q.track && x.categoryId === q.categoryId);
+      const idx = list.findIndex(x => x.id === q.id);
+      const source = idx >= 0 ? list : QUESTIONS;
+      const i = source.findIndex(x => x.id === q.id);
+      return {
+        index: i >= 0 ? i + 1 : 1,
+        total: source.length,
+        prev: i > 0 ? source[i - 1] : null,
+        next: i >= 0 && i < source.length - 1 ? source[i + 1] : null
+      };
+    }
+
+    // 当前小节学完后该去哪儿：同技术方向的下一节；已是该方向最后一节则顺延到下一个方向的第一节
+    function getNextSection(q) {
+      if (!q) return null;
+      const flat = [];
+      TRACK_GROUPS.forEach(g => {
+        (g.categories || []).forEach(c => {
+          flat.push({ track: g.id, trackName: g.name, categoryId: c.id, name: c.name, desc: c.desc || '' });
+        });
+      });
+      const cur = flat.findIndex(s => s.track === q.track && s.categoryId === q.categoryId);
+      if (cur < 0) return null;
+      for (let k = cur + 1; k < flat.length; k += 1) {
+        const first = QUESTIONS.find(x => x.track === flat[k].track && x.categoryId === flat[k].categoryId);
+        if (first) return { ...flat[k], firstId: first.id };
+      }
+      return null;
+    }
+
+    // 跳到下一小节的第一题（侧栏范围会跟着当前题自动切换到新小节）
+    function gotoNextSection(qId) {
+      const q = findQuestion(qId);
+      const sec = getNextSection(q);
+      if (!sec) return false;
+      navigateTo('/q/' + sec.firstId);
+      return true;
+    }
+
+    function renderQuestionDetailView(qId) {
+      const q = findQuestion(qId);
+      if (!q) {
+        return `<div class="py-20 text-center text-sm text-slate-500">题目不存在或已下线</div>`;
+      }
+      const parts = getDetailParts(qId);
+      const sib = getSiblings(q);
+      // 本节最后一题：把「返回题库」换成「下一小节」，学完可以直接往下走
+      const nextSec = sib.next ? null : getNextSection(q);
+      const isFav = q.favorite;
+      const currentMastery = q.lastStatus;
+      const progressPct = sib.total ? Math.min(100, Math.round((sib.index / sib.total) * 100)) : 0;
+
+      const diffClass = q.difficulty === '简单'
+        ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'
+        : q.difficulty === '中等'
+        ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20'
+        : 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20';
+
+      const codeText = htmlToCodeText(parts.code);
+      const hasCode = codeText.trim().length > 0;
+      const hasFollowups = parts.followups.trim().length > 0;
+
+      return `
+        <div data-detail-id="${q.id}" class="max-w-4xl mx-auto space-y-4 pb-1">
+          <div id="detail-navbar" class="sticky top-0 z-20 bg-white dark:bg-slate-900 rounded-2xl p-3 sm:p-4 sm:px-6 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-2 sm:gap-4">
+            <div class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm min-w-0">
+              <button type="button" onclick="navigateTo('/')" class="text-slate-500 hover:text-brand-600 dark:hover:text-brand-400 font-medium shrink-0">首页</button>
+              <span class="text-slate-300 dark:text-slate-700">/</span>
+              <button type="button" onclick="filterListByTrack('${q.track}')" class="text-slate-500 hover:text-brand-600 dark:hover:text-brand-400 font-medium shrink-0">${escapeHtml(q.trackName)}</button>
+              <span class="text-slate-300 dark:text-slate-700">/</span>
+              <button type="button" onclick="selectCategoryFromSidebar('${q.track}', '${q.categoryId}')" class="max-w-[9rem] text-slate-600 dark:text-slate-300 hover:text-brand-600 font-medium truncate">${escapeHtml(q.categoryName)}</button>
+              <span class="text-slate-300 dark:text-slate-700">/</span>
+              <span class="font-mono font-semibold text-brand-600 dark:text-brand-400 shrink-0">#${q.id}</span>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                <span class="text-[11px] sm:text-xs font-mono text-slate-500 dark:text-slate-400 whitespace-nowrap">本章节 ${sib.index}/${sib.total} 题</span>
+                <div class="w-12 sm:w-24 h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                  <div style="width: ${progressPct}%" class="h-full bg-brand-500 rounded-full"></div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button
+                  type="button"
+                  onclick="${sib.prev ? `goDetailSibling(${sib.prev.id}, -1)` : ''}"
+                  ${!sib.prev ? 'disabled' : ''}
+                  class="px-2 sm:px-2.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap border border-slate-200 dark:border-slate-700 ${
+                    sib.prev
+                      ? 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      : 'text-slate-300 dark:text-slate-700 cursor-not-allowed'
+                  } transition"
+                >
+                  ← 上一题
+                </button>
+                ${nextSec ? `
+                <button
+                  type="button"
+                  onclick="gotoNextSection(${q.id})"
+                  title="下一小节：${escapeHtml(nextSec.name)}（${escapeHtml(nextSec.trackName)}）"
+                  class="px-2 sm:px-2.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap border border-brand-500/40 bg-brand-500/10 text-brand-600 dark:text-brand-400 hover:bg-brand-500/20 transition inline-flex items-center gap-1"
+                >
+                  <span>下一小节</span>
+                  <span class="hidden sm:inline-block max-w-[6.5rem] truncate align-bottom text-[11px] opacity-70">· ${escapeHtml(nextSec.name)}</span>
+                  <span>→</span>
+                </button>` : `
+                <button
+                  type="button"
+                  onclick="${sib.next ? `goDetailSibling(${sib.next.id}, 1)` : `navigateTo('/list')`}"
+                  class="px-2 sm:px-2.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                >
+                  ${sib.next ? '下一题 →' : '返回题库'}
+                </button>`}
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-4 sm:space-y-5">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full border ${diffClass}">${q.difficulty}</span>
+                <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${escapeHtml(q.categoryName)}</span>
+                ${q.tags.map(t => `
+                  <span class="text-xs font-mono px-2.5 py-0.5 rounded-md bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20">
+                    #${escapeHtml(t)}
+                  </span>
+                `).join('')}
+              </div>
+
+              <button
+                type="button"
+                onclick="toggleFavorite(${q.id})"
+                data-fav-id="${q.id}"
+                data-fav-style="pill"
+                class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border transition ${
+                  isFav
+                    ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
+                    : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-amber-400'
+                }"
+              >
+                <svg data-fav-svg class="w-4 h-4" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                </svg>
+                <span data-fav-label>${isFav ? '已收藏' : '收藏'}</span>
+              </button>
+            </div>
+
+            <h1 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug">
+              ${escapeHtml(q.title)}
+            </h1>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden">
+            <div class="px-6 py-4 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+                <span class="text-sm font-bold text-slate-800 dark:text-slate-100">参考答案与深度解析</span>
+              </div>
+
+              <label class="inline-flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  ${state.alwaysExpandAnswer ? 'checked' : ''}
+                  onchange="toggleAlwaysExpandAnswer(this.checked)"
+                  class="rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                />
+                <span>背题模式（默认展开答案）</span>
+              </label>
+            </div>
+
+            ${!state.answerExpanded ? `
+              <div class="p-8 sm:p-12 text-center space-y-4">
+                <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-600 dark:text-brand-400 mx-auto flex items-center justify-center">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                </div>
+                <div class="space-y-1">
+                  <div class="text-base font-bold text-slate-900 dark:text-white">先自己想一想，再看答案详解</div>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">主动回忆核心原理与关键词，比直接阅读答案记忆留存率高 3 倍</p>
+                </div>
+                <div class="pt-2">
+                  <button
+                    type="button"
+                    onclick="expandCurrentAnswer()"
+                    class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-brand-600 hover:bg-brand-500 text-white shadow-sm shadow-brand-600/20 transition"
+                  >
+                    <span>查看答案</span>
+                    <kbd class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-brand-700 text-brand-100">Space</kbd>
+                  </button>
+                </div>
+              </div>
+            ` : `
+              <div class="p-6 sm:p-8 space-y-6 animate-fade-in">
+                <div class="rounded-2xl bg-brand-500/5 dark:bg-brand-500/10 border border-brand-500/20 p-5 space-y-2">
+                  <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300">
+                    <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+                    <span>核心答案（面试直答精炼版）</span>
+                  </div>
+                  <div class="answer-prose text-sm sm:text-base text-slate-800 dark:text-slate-100 leading-relaxed">${parts.core || '<p class="text-slate-400">暂无答案</p>'}</div>
+                </div>
+
+                ${parts.analysis ? `
+                  <div class="space-y-2.5">
+                    <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <span class="w-1.5 h-4 rounded-full bg-indigo-500"></span>
+                      <span>深入解析</span>
+                    </h3>
+                    <div class="answer-prose text-[15px] sm:text-base text-slate-600 dark:text-slate-300 leading-7 pl-3.5 border-l-2 border-slate-100 dark:border-slate-800">${parts.analysis}</div>
+                  </div>
+                ` : ''}
+
+                ${hasFollowups ? `
+                  <div class="space-y-2.5">
+                    <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <span class="w-1.5 h-4 rounded-full bg-amber-500"></span>
+                      <span>常见追问</span>
+                    </h3>
+                    <div class="answer-prose text-[15px] sm:text-base text-slate-600 dark:text-slate-300 leading-7 pl-3.5 border-l-2 border-slate-100 dark:border-slate-800">${parts.followups}</div>
+                  </div>
+                ` : ''}
+
+                ${hasCode ? `
+                  <div class="rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                    <div class="px-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/80 flex items-center justify-between">
+                      <button
+                        type="button"
+                        onclick="toggleCodeBlock()"
+                        class="flex items-center gap-2 text-xs font-mono font-medium text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-400 transition"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                        <span>代码示例 · ${codeText.split('\n').length} 行 · ${state.codeExpanded ? '收起' : '展开'}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onclick="copyCurrentCode()"
+                        class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-brand-600 border border-slate-200 dark:border-slate-700 transition"
+                      >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                        <span>复制代码</span>
+                      </button>
+                    </div>
+                    <div class="${state.codeExpanded ? '' : 'hidden'} avoid-dark-invert">${parts.code}</div>
+                  </div>
+                ` : ''}
+              </div>
+            `}
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="text-sm font-bold text-slate-900 dark:text-white">这题你掌握得怎么样？</div>
+              ${state.user ? `
+                <label class="inline-flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    ${state.autoNextOnRate ? 'checked' : ''}
+                    onchange="toggleAutoNextOnRate(this.checked)"
+                    class="rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                  />
+                  <span>点选后自动进入下一题</span>
+                </label>
+              ` : `
+                <div class="text-xs text-slate-500 dark:text-slate-400">
+                  <button type="button" onclick="openLoginModal()" class="font-semibold text-brand-600 dark:text-brand-400 hover:underline">登录</button>
+                  后自评结果才会保存到云端
+                </div>
+              `}
+            </div>
+
+            <div class="grid grid-cols-3 gap-2.5 sm:flex sm:items-center">
+              <button
+                type="button"
+                onclick="rateQuestion(${q.id}, 'mastered')"
+                class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition flex items-center justify-center gap-1.5 ${
+                  currentMastery === 'mastered'
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm shadow-emerald-600/20'
+                    : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/25 hover:bg-emerald-500/20'
+                }"
+              >
+                <span class="w-2 h-2 rounded-full bg-current"></span>
+                <span>掌握了</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="rateQuestion(${q.id}, 'fuzzy')"
+                class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition flex items-center justify-center gap-1.5 ${
+                  currentMastery === 'fuzzy'
+                    ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-sm shadow-amber-500/20'
+                    : 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/25 hover:bg-amber-500/20'
+                }"
+              >
+                <span class="w-2 h-2 rounded-full bg-current"></span>
+                <span>有点模糊</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="rateQuestion(${q.id}, 'unknown')"
+                class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition flex items-center justify-center gap-1.5 ${
+                  currentMastery === 'unknown'
+                    ? 'bg-rose-600 text-white border-rose-600 shadow-sm shadow-rose-600/20'
+                    : 'bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/25 hover:bg-rose-500/20'
+                }"
+              >
+                <span class="w-2 h-2 rounded-full bg-current"></span>
+                <span>还不会</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function rerenderDetail() {
+      const container = document.getElementById('view-container');
+      if (!container) return;
+      swapView(container, renderQuestionDetailView(state.currentQuestionId), { kind: 'instant' });
+      if (typeof wrapAnswerTables === 'function') wrapAnswerTables(container);
+    }
+
+    function expandCurrentAnswer() {
+      state.answerExpanded = true;
+      rerenderDetail();
+      const mainScroll = document.getElementById('main-scroll-container');
+      if (mainScroll) mainScroll.scrollTop = 0;
+    }
+
+    function toggleAlwaysExpandAnswer(checked) {
+      state.alwaysExpandAnswer = checked;
+      state.answerExpanded = checked;
+      savePersistedState();
+      rerenderDetail();
+    }
+
+    function toggleCodeBlock() {
+      state.codeExpanded = !state.codeExpanded;
+      rerenderDetail();
+    }
+
+    function toggleAutoNextOnRate(checked) {
+      state.autoNextOnRate = checked;
+      savePersistedState();
+    }
+
+    function copyCurrentCode() {
+      const parts = getDetailParts(state.currentQuestionId);
+      const text = htmlToCodeText(parts.code);
+      if (!text.trim()) { showToast('本题没有代码示例'); return; }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('代码已复制到剪贴板', 'success');
+        }).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('代码已复制到剪贴板', 'success');
+      } catch (e) {
+        showToast('复制失败，请手动选择复制');
+      }
+      ta.remove();
+    }
+
+    const RATE_LABEL = {
+      mastered: { text: '已标记为「掌握了」', toast: 'success' },
+      fuzzy: { text: '已标记为「有点模糊」（进入错题本）', toast: 'warning' },
+      unknown: { text: '已标记为「还不会」（进入错题本）', toast: 'warning' }
+    };
+
+    async function rateQuestion(qId, status) {
+      if (!state.user) {
+        showToast('请先登录，自评结果才能保存');
+        openLoginModal();
+        return;
+      }
+      const q = findQuestion(qId);
+      if (!q) return;
+      try {
+        await API.req('/questions/' + qId + '/record', {
+          method: 'POST',
+          body: { status: STATUS_CODE[status] }
+        });
+      } catch (e) {
+        showToast('记录失败：' + e.message);
+        return;
+      }
+      q.lastStatus = status;
+      if (status === 'fuzzy' || status === 'unknown') q.inWrongBook = true;
+      if (detailIsOpen(qId)) DETAIL_CACHE[qId] && (DETAIL_CACHE[qId].last_status = STATUS_CODE[status]);
+      updateHeaderAndSidebarBadges();
+      renderSidebarQuestionList();
+      loadStats().then(() => updateHeaderAndSidebarBadges());
+
+      const meta = RATE_LABEL[status] || { text: '状态已更新', toast: 'info' };
+      showToast(meta.text, meta.toast);
+
+      const sib = getSiblings(q);
+      if (state.autoNextOnRate && sib.next) {
+        setTimeout(() => navigateTo(`/q/${sib.next.id}`), 260);
+      } else {
+        rerenderDetail();
+      }
+    }
+
+    function detailIsOpen(qId) {
+      return routePath() === '/q/' + qId;
+    }
+
+    async function toggleFavorite(qId) {
+      if (!state.user) {
+        showToast('请先登录，收藏才能同步到云端');
+        openLoginModal();
+        return;
+      }
+      const q = findQuestion(qId);
+      try {
+        const res = await API.req('/questions/' + qId + '/favorite', { method: 'POST' });
+        const fav = !!(res && res.favorite);
+        if (q) q.favorite = fav;
+        if (DETAIL_CACHE[qId]) DETAIL_CACHE[qId].favorite = fav;
+        // 只热更新收藏按钮与侧栏星标，不整页重绘（重绘会闪屏并把列表滚回顶部）
+        syncFavoriteUI(qId, fav);
+        showToast(fav ? '已加入我的收藏夹' : '已从我的收藏移除', fav ? 'success' : 'info');
+      } catch (e) {
+        showToast('操作失败：' + e.message);
+        return;
+      }
+      updateHeaderAndSidebarBadges();
+      if (routePath().startsWith('/favorites')) renderCurrentRoute();
+      loadStats().then(() => updateHeaderAndSidebarBadges());
+    }
+
+    // 收藏状态就地同步：列表星星、详情页按钮、侧栏星标一起变
+    function syncFavoriteUI(qId, fav) {
+      document.querySelectorAll('[data-fav-id="' + qId + '"]').forEach(btn => {
+        btn.title = fav ? '取消收藏' : '加入收藏';
+        const svg = btn.querySelector('[data-fav-svg]');
+        if (svg) svg.setAttribute('fill', fav ? 'currentColor' : 'none');
+        const label = btn.querySelector('[data-fav-label]');
+        if (label) label.textContent = fav ? '已收藏' : '收藏';
+        if (btn.dataset.favStyle === 'icon') {
+          ['text-amber-500', 'bg-amber-500/10'].forEach(c => btn.classList.toggle(c, fav));
+          ['text-slate-300', 'dark:text-slate-600', 'hover:text-amber-400', 'hover:bg-slate-100', 'dark:hover:bg-slate-800'].forEach(c => btn.classList.toggle(c, !fav));
+        } else {
+          ['bg-amber-500/10', 'text-amber-600', 'dark:text-amber-400', 'border-amber-500/30'].forEach(c => btn.classList.toggle(c, fav));
+          ['bg-slate-50', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300', 'border-slate-200', 'dark:border-slate-700', 'hover:border-amber-400'].forEach(c => btn.classList.toggle(c, !fav));
+        }
+      });
+      document.querySelectorAll('[data-sb-fav="' + qId + '"]').forEach(el => el.classList.toggle('hidden', !fav));
+    }
+
+    // 旧版「重置记录」按钮：服务端记录不支持一键清空，这里直接从界面移除
+    function resetDemoProgress() {
+      showToast('进度保存在云端，无法一键清空');
+    }
+
+    // 宽表格在窄屏可横向滚动，避免撑破页面
+    function wrapAnswerTables(root) {
+      const scope = root || document.getElementById('view-container');
+      if (!scope) return;
+      scope.querySelectorAll('.answer-prose table').forEach(table => {
+        if (table.parentElement && table.parentElement.classList.contains('table-scroll')) return;
+        const wrap = document.createElement('div');
+        wrap.className = 'table-scroll overflow-x-auto -mx-1 px-1';
+        table.parentNode.insertBefore(wrap, table);
+        wrap.appendChild(table);
+      });
+    }
+
+// 12. Global Search Handlers
+    function handleSearchInputChange(val) {
+      state.searchQuery = val;
+      const clearBtn = document.getElementById('btn-clear-search');
+      if (clearBtn) {
+        if (val.trim().length > 0) clearBtn.classList.remove('hidden');
+        else clearBtn.classList.add('hidden');
+      }
+    }
+
+    function handleGlobalSearchSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('global-search-input');
+      const kw = input ? input.value.trim() : '';
+      state.searchQuery = kw;
+      resetListPage();
+      navigateTo(`/list?q=${encodeURIComponent(kw)}`);
+    }
+
+    function clearGlobalSearch() {
+      state.searchQuery = '';
+      const input = document.getElementById('global-search-input');
+      if (input) input.value = '';
+      const clearBtn = document.getElementById('btn-clear-search');
+      if (clearBtn) clearBtn.classList.add('hidden');
+      if (routePath().startsWith('/list')) {
+        navigateTo('/list');
+      }
+    }
+
+    // 13. Login & User Session
+    async function handleAuthButtonClick() {
+      if (!state.user) {
+        openLoginModal();
+        return;
+      }
+      const ok = await askConfirm({
+        title: '退出登录',
+        message: '退出后自评与收藏将不再同步到云端，重新登录即可恢复。',
+        okText: '退出登录',
+        tone: 'danger'
+      });
+      if (ok) await logout();
+    }
+
+    async function logout() {
+      saveToken('');
+      API.clearAuth();
+      SERVER_STATS = null;
+      QUESTIONS.forEach(q => { q.favorite = false; q.lastStatus = null; q.inWrongBook = false; });
+      DETAIL_CACHE = {};
+      state.masteryMap = {};
+      state.favorites = [];
+      updateHeaderAndSidebarBadges();
+      showToast('已退出登录');
+      closeMobileSidebar();
+      await renderCurrentRoute();
+    }
+
+    // 统一确认弹窗：替代浏览器原生 window.confirm（那个太丑，且不能定制危险色）
+    let CONFIRM_RESOLVER = null;
+
+    function askConfirm(opts) {
+      const o = opts || {};
+      const modal = document.getElementById('confirm-modal');
+      if (!modal) return Promise.resolve(window.confirm(o.message || '确定继续？'));
+      const danger = o.tone === 'danger';
+      document.getElementById('confirm-title').textContent = o.title || '请确认';
+      document.getElementById('confirm-message').textContent = o.message || '';
+      const okBtn = document.getElementById('confirm-ok');
+      okBtn.textContent = o.okText || '确定';
+      okBtn.className = 'px-4 py-2 rounded-xl text-xs font-semibold text-white shadow-sm transition ' + (danger
+        ? 'bg-rose-600 hover:bg-rose-500 shadow-rose-600/20'
+        : 'bg-brand-600 hover:bg-brand-500 shadow-brand-600/20');
+      const iconWrap = document.getElementById('confirm-icon-wrap');
+      if (iconWrap) {
+        iconWrap.className = 'w-10 h-10 shrink-0 rounded-xl flex items-center justify-center ' + (danger
+          ? 'bg-rose-500/10 text-rose-500'
+          : 'bg-brand-500/10 text-brand-500');
+      }
+      if (CONFIRM_RESOLVER) { const prev = CONFIRM_RESOLVER; CONFIRM_RESOLVER = null; prev(false); }
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      return new Promise(resolve => {
+        CONFIRM_RESOLVER = resolve;
+        setTimeout(() => { try { okBtn.focus(); } catch (e) {} }, 30);
+      });
+    }
+
+    function resolveConfirm(ok) {
+      const modal = document.getElementById('confirm-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+      const r = CONFIRM_RESOLVER;
+      CONFIRM_RESOLVER = null;
+      if (r) r(!!ok);
+    }
+
+    function openLoginModal() {
+      const modal = document.getElementById('login-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        const userInp = document.getElementById('login-username');
+        if (userInp) userInp.focus();
+      }
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById('login-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+      const err = document.getElementById('login-error');
+      if (err) { err.textContent = ''; err.classList.add('hidden'); }
+    }
+
+    function showLoginError(msg) {
+      const err = document.getElementById('login-error');
+      if (!err) return;
+      err.textContent = msg;
+      err.classList.remove('hidden');
+    }
+
+    let LOGIN_BUSY = false;
+
+    async function submitLoginForm(e) {
+      e.preventDefault();
+      if (LOGIN_BUSY) return;
+      const userInp = document.getElementById('login-username');
+      const passInp = document.getElementById('login-password');
+      const btn = document.getElementById('btn-login-submit');
+      const username = userInp ? userInp.value.trim() : '';
+      const password = passInp ? passInp.value : '';
+      if (!username || !password) {
+        showLoginError('请输入账号与密码');
+        return;
+      }
+      LOGIN_BUSY = true;
+      if (btn) { btn.disabled = true; btn.textContent = '登录中…'; btn.classList.add('opacity-70'); }
+      try {
+        const data = await API.req('/auth/login', { method: 'POST', body: { username, password } });
+        saveToken(data.token);
+        state.user = data.user || { username };
+        closeLoginModal();
+        if (passInp) passInp.value = '';
+        showToast(`欢迎回来，${state.user.display_name || state.user.username}`, 'success');
+        // 登录后重拉全量，补齐收藏 / 自评状态
+        await loadAllQuestions();
+        await refreshMe();
+        await loadStats();
+        updateHeaderAndSidebarBadges();
+        await renderCurrentRoute();
+      } catch (err) {
+        const msg = err && err.status === 401
+          ? '账号或密码错误'
+          : (err && err.message) || '登录失败';
+        showLoginError(msg);
+      } finally {
+        LOGIN_BUSY = false;
+        if (btn) { btn.disabled = false; btn.textContent = '登录并同步'; btn.classList.remove('opacity-70'); }
+      }
+    }
+
+    // 14. Keyboard Shortcuts (/ 搜索, Space 展开答案, 1/2/3 自评)
+    window.addEventListener('keydown', (e) => {
+      const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
+        if (e.key === 'Escape') document.activeElement.blur();
+        return;
+      }
+      if (e.key === '/') {
+        e.preventDefault();
+        const searchInp = document.getElementById('global-search-input');
+        if (searchInp) searchInp.focus();
+        return;
+      }
+      const onDetail = routePath().startsWith('/q/');
+      if (!onDetail) return;
+      if (e.code === 'Space' && !state.answerExpanded) {
+        e.preventDefault();
+        expandCurrentAnswer();
+      } else if (['1', '2', '3'].includes(e.key) && state.user) {
+        e.preventDefault();
+        const map = { '1': 'mastered', '2': 'fuzzy', '3': 'unknown' };
+        rateQuestion(state.currentQuestionId, map[e.key]);
+      }
+    });
+
+    window.addEventListener('popstate', () => {
+      renderCurrentRoute();
+    });
+    // 同页 hash 变化（老链接/外部跳转）也走一次路由 + 迁移
+    window.addEventListener('hashchange', () => {
+      if ((window.location.hash || '').startsWith('#/')) migrateLegacyHashRoute();
+      renderCurrentRoute();
+    });
+
+    window.addEventListener('load', () => {
+      if (routePath().startsWith('/q/')) centerSidebarOnCurrent(0);
+    });
+
+    // ESC 关闭确认弹窗（有确认弹窗时优先关它）
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const cm = document.getElementById('confirm-modal');
+      if (cm && !cm.classList.contains('hidden')) {
+        e.preventDefault();
+        resolveConfirm(false);
+      }
+    });
+
+    // Close custom popover menus on outside click
+    document.addEventListener('click', () => {
+      if (state.sidebarScopeMenuOpen) {
+        state.sidebarScopeMenuOpen = false;
+        renderSidebarQuestionList();
+      }
+    });
+
+    // Initialize on load
+    migrateLegacyHashRoute();
+    window.addEventListener('DOMContentLoaded', async () => {
+      loadPersistedState();
+      applyTheme();
+      initHeaderAutoHide();
+      await renderCurrentRoute();
+    });
+    // 手机端单键循环主题：浅色 → 深色 → 跟随系统
+    function cycleThemeMode() {
+      const order = ['light', 'dark', 'system'];
+      const idx = order.indexOf(state.themeMode);
+      setThemeMode(order[(idx + 1) % order.length] || 'light');
+    }
+
+    // 9. 顶栏滚动自动隐藏 / 回滚显示
+    // 锁定期与基准位置放到模块作用域，路由切换时可以强制恢复顶栏（见 showAppHeader）
+    let HEADER_LAST_Y = 0;
+    let HEADER_LOCKED_UNTIL = 0;   // 收起 / 展开后短暂锁定，避免布局高度变化引发的抖动
+    let HEADER_SUPPRESS_REVEAL = false;  // 换题回顶时抑制一次「回到顶部就展开顶栏」，保持沉浸状态
+
+    // 换题 / 换路由时强制顶栏可见。
+    // 原实现：滚动锁定期内把 scrollTop 归零时 apply() 会直接 return，
+    // 顶栏就一直停在 header-hidden，表现为「点下一题后顶栏不出现」。
+    function showAppHeader() {
+      const header = document.getElementById('app-header');
+      if (!header) return;
+      header.classList.remove('header-hidden');
+      document.body.classList.remove('header-collapsed');
+      HEADER_LAST_Y = 0;
+      HEADER_LOCKED_UNTIL = 0;
+      HEADER_SUPPRESS_REVEAL = false;
+    }
+
+    function initHeaderAutoHide() {
+      const header = document.getElementById('app-header');
+      const scroller = document.getElementById('main-scroll-container');
+      if (!header || !scroller) return;
+      let ticking = false;
+      HEADER_LAST_Y = scroller.scrollTop;
+      const HIDE_AFTER = 96;   // 下滑超过该距离才隐藏
+      const REVEAL_UP = 12;    // 上滑超过该距离立即显示
+      const LOCK_MS = 420;
+
+      const apply = () => {
+        ticking = false;
+        const now = performance.now();
+        const y = scroller.scrollTop;
+        if (now < HEADER_LOCKED_UNTIL) { HEADER_LAST_Y = y; return; }
+        const delta = y - HEADER_LAST_Y;
+        HEADER_LAST_Y = y;
+
+        if (y <= 8) {
+          if (HEADER_SUPPRESS_REVEAL) { HEADER_SUPPRESS_REVEAL = false; HEADER_LOCKED_UNTIL = 0; return; }
+          header.classList.remove('header-hidden');
+          document.body.classList.remove('header-collapsed');
+          return;
+        }
+        if (header.classList.contains('header-hidden')) {
+          if (delta < -REVEAL_UP) {
+            header.classList.remove('header-hidden');
+            document.body.classList.remove('header-collapsed');
+            HEADER_LOCKED_UNTIL = now + LOCK_MS;
+          }
+          return;
+        }
+        if (delta > 4 && y > HIDE_AFTER) {
+          header.classList.add('header-hidden');
+          document.body.classList.add('header-collapsed');
+          HEADER_LOCKED_UNTIL = now + LOCK_MS;
+        }
+      };
+
+      scroller.addEventListener('scroll', () => {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(apply);
+        }
+      }, { passive: true });
+
+      // 沉浸刷题时内容不够长、页面停在顶部滚不动：给一个「上滑唤回顶栏」的手势出口
+      scroller.addEventListener('wheel', (e) => {
+        if (e.deltaY < -6 && scroller.scrollTop <= 8 && header.classList.contains('header-hidden')) {
+          showAppHeader();
+        }
+      }, { passive: true });
+      let touchStartY = 0;
+      scroller.addEventListener('touchstart', (e) => {
+        touchStartY = (e.touches && e.touches[0]) ? e.touches[0].clientY : 0;
+      }, { passive: true });
+      scroller.addEventListener('touchmove', (e) => {
+        if (scroller.scrollTop > 8 || !header.classList.contains('header-hidden')) return;
+        const y = (e.touches && e.touches[0]) ? e.touches[0].clientY : touchStartY;
+        if (y - touchStartY > 24) { showAppHeader(); touchStartY = y; }
+      }, { passive: true });
+    }
+
+    // 9.1 侧栏题目列表对齐到当前题
+    // center=true 只在列表刚重建/首屏时居中一次；换题时只做「最小滚动」，
+    // 当前题已可见就完全不动，避免每次下一题整列从第一题重排、长距离滚动。
+    // 列表刚重建时把当前题居中；布局漂移就重试，最多 4 帧（实测首帧会算错 1000px 以上）
+    function centerSidebarOnCurrent(tries) {
+      const wrap = document.getElementById('sidebar-question-scroll');
+      if (!wrap) return;
+      const id = state.currentQuestionId;
+      if (!id) return;
+      const el = wrap.querySelector(`button[data-qid="${id}"]`);
+      const n = tries || 0;
+      if (!el || wrap.clientHeight <= 0) {
+        if (n < 4) requestAnimationFrame(() => centerSidebarOnCurrent(n + 1));
+        return;
+      }
+      const delta = el.getBoundingClientRect().top - wrap.getBoundingClientRect().top;
+      const offset = (wrap.clientHeight - el.offsetHeight) / 2;
+      const diff = delta - offset;
+      wrap.scrollTop = Math.max(0, wrap.scrollTop + diff);
+      if (Math.abs(diff) > 4 && n < 4) requestAnimationFrame(() => centerSidebarOnCurrent(n + 1));
+    }
+
+    function scheduleSidebarCenter() {
+      centerSidebarOnCurrent(0);
+      requestAnimationFrame(() => centerSidebarOnCurrent(0));
+      setTimeout(() => centerSidebarOnCurrent(0), 120);
+      setTimeout(() => centerSidebarOnCurrent(0), 420);
+    }
+
+    function scrollSidebarToCurrent(center) {
+      const wrap = document.getElementById('sidebar-question-scroll');
+      if (!wrap) return;
+      const id = state.currentQuestionId;
+      if (!id) return;
+      const el = wrap.querySelector(`button[data-qid="${id}"]`);
+      if (!el) return;
+      const delta = el.getBoundingClientRect().top - wrap.getBoundingClientRect().top;
+      const h = el.offsetHeight;
+      const margin = 8;
+      const ch = wrap.clientHeight;
+      if (ch <= 0) return;
+      if (center) {
+        wrap.scrollTop = Math.max(0, wrap.scrollTop + delta - Math.max(margin, (ch - h) / 2));
+        return;
+      }
+      if (delta < margin) {
+        wrap.scrollTop = Math.max(0, wrap.scrollTop + delta - margin);
+      } else if (delta + h > ch - margin) {
+        // 只向下滚「超出的那一行」，不做半屏跳转
+        wrap.scrollTop = wrap.scrollTop + delta + h - (ch - margin);
+      }
+    }
+  </script>
+</body>
+</html>
