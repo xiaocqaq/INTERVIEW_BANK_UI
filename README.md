@@ -38,6 +38,10 @@
 | --- | --- |
 | ![移动首页](./docs/screenshots/07-home-mobile.png) | ![移动详情](./docs/screenshots/08-detail-mobile.png) |
 
+| 全局搜索 | 移动端侧栏抽屉 |
+| --- | --- |
+| ![搜索](./docs/screenshots/05-list-search.png) | ![移动侧栏](./docs/screenshots/09-sidebar-mobile.png) |
+
 更多截图见 [`docs/screenshots/`](./docs/screenshots)。
 
 ---
